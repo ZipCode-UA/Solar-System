@@ -24,6 +24,5 @@ double getAttractionForce(const CelestialBody &a, const CelestialBody &b)
   const double gravitationalForce = 6.6743 * pow(10, -11); // m^3/kg^2
   const double distance = getDistance(a, b);
   
-  // TODO - cont. from "CelestialBody.h" - "Change to private and provide accessors"
-  return gravitationalForce * ((a.mass * b.mass) / (pow(distance, 2)));
+  return gravitationalForce * ((a.getMass() * b.getMass()) / (pow(distance, 2)));
 }
