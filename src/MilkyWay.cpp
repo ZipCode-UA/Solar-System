@@ -59,7 +59,7 @@ std::vector<CelestialBody> getMilkyWay()
     108.321 * pow(10, 10),
     6371,
     5513,
-    30.03,
+    29.78,
     365.256,
     9.82,
     147.095 * pow(10, 6),
