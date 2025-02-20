@@ -93,7 +93,6 @@ std::vector<CelestialBody> getMilkyWay()
   
   // TODO - Add Neptune
 
-  // TODO - Add Pluto :)
   CelestialBody Pluto
   (
     0.01303 * pow(10, 24),
@@ -109,6 +108,7 @@ std::vector<CelestialBody> getMilkyWay()
     false
   );
   MilkyWay.push_back(Pluto);
+
   // TODO - Add Chiron :)
 
   return MilkyWay;
