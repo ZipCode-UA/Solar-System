@@ -89,7 +89,21 @@ std::vector<CelestialBody> getMilkyWay()
 
   // TODO - Add Saturn
 
-  // TODO - Add Uranus
+  CelestialBody Uranus
+  (
+    8.6811 * pow(10, 24),
+    6.833 * pow(10, 13),
+    25362,
+    1270,
+    6.79,
+    30685.4,
+    9.01,
+    2732.696 * pow(10, 6),
+    3001.39 * pow(10, 6),
+    28,
+    true
+  );
+  MilkyWay.push_back(Uranus);
   
   // TODO - Add Neptune
 
