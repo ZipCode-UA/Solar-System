@@ -94,9 +94,19 @@ std::vector<CelestialBody> getMilkyWay()
   // TODO - Add Neptune
   CelestialBody Neptune
   (
-
-    
-  )
+    102.409 * pow(10, 24),
+    6254 * pow(10, 10),
+    24622,
+    1638,
+    5.45,
+    60189.018,
+    11.27,
+    4471.050 * pow(10, 6),
+    4558.857 * pow(10, 6),
+    16,
+    true
+  );
+  MilkyWay.push_back(Neptune); 
 
   // TODO - Add Pluto :)
 
