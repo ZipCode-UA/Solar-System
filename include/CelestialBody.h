@@ -76,47 +76,47 @@ public:
     return this->ring;
   }
 
-  void getMass(double mass) {
+  void setMass(double mass) {
     this->mass = mass;
   }
 
-  void getVolume(double volume) {
+  void setVolume(double volume) {
     this->volume = volume;
   }
 
-  void getRadius(double radius) {
+  void setRadius(double radius) {
     this->radius = radius;
   }
 
-  void getDensity(double density) {
+  void setDensity(double density) {
     this->density = density;
   }
 
-  void getVelocity(double velocity) {
+  void setVelocity(double velocity) {
     this->velocity = velocity;
   }
 
-  void getOrbit(double orbit) {
+  void setOrbit(double orbit) {
     this->orbit = orbit;
   }
 
-  void getGravity(double gravity) {
+  void setGravity(double gravity) {
     this->gravity = gravity;
   }
 
-  void getPerihelion(double perihelion) {
+  void setPerihelion(double perihelion) {
     this->perihelion = perihelion;
   }
 
-  void getAphelion(double aphelion) {
+  void setAphelion(double aphelion) {
     this->aphelion = aphelion;
   }
 
-  void getSatellites(int satellites) {
+  void setSatellites(int satellites) {
     this->satellites = satellites;
   }
 
-  void getRing(bool ring) {
+  void setRing(bool ring) {
     this->ring = ring;
   }
 
