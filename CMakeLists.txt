@@ -6,7 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+
 # TODO - Fetch ImGui
+include(FetchContent)
 
 # TODO - Find package openGL
 
