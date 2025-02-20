@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.30)
 
 project(SolarSystem)
 
@@ -15,3 +15,7 @@ set(Dirs
 
 add_library(src ${Sources})
 target_include_directories(src PUBLIC ${Dirs})
+
+# Find and link OpenGL
+find_package(OpenGL REQUIRED)
+target_link_libraries(src OpenGL::GL)
