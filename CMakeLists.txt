@@ -32,6 +32,11 @@ set(IMGUI_SOURCES
     ${IMGUI_DIR}/backends/imgui_impl_opengl3.cpp
 )
 
+# Create imgui library
+add_library(imgui STATIC ${IMGUI_SOURCES})
+target_include_directories(imgui PUBLIC ${IMGUI_DIR} ${IMGUI_DIR}/backends)
+target_link_libraries(imgui PUBLIC glfw)
+
 # TODO - Find package openGL
 
 # Executable
@@ -42,3 +47,4 @@ add_subdirectory(include)
 add_subdirectory(src)
 target_link_libraries(${PROJECT_NAME} include)
 target_link_libraries(${PROJECT_NAME} src)
+target_link_libraries(${PROJECT_NAME} imgui)
