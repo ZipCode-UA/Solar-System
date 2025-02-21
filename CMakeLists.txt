@@ -12,11 +12,16 @@ include(FetchContent)
 
 # Fetch ImGui
 FetchContent_Declare(
+    glfw
+    GIT_REPOSITORY https://github.com/glfw/glfw.git
+    GIT_TAG latest
+)
+FetchContent_Declare(
     imgui
     GIT_REPOSITORY https://github.com/ocornut/imgui
     GIT_TAG v1.91.8-docking
 )
-FetchContent_MakeAvailable(imgui)
+FetchContent_MakeAvailable(imgui glfw)
 
 # Include imgui source Files
 set(IMGUI_DIR ${CMAKE_BINARY_DIR}/_deps/imgui-src)
