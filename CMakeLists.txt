@@ -7,10 +7,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 
-# TODO - Fetch ImGui
+# Include FetchContent Module
 include(FetchContent)
 
-# Fetch ImGui and make availble
+# Fetch ImGui
 FetchContent_Declare(
     imgui
     GIT_REPOSITORY https://github.com/ocornut/imgui
@@ -18,10 +18,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(imgui)
 
-# Set ImGui_dir
+# Include imgui source Files
 set(IMGUI_DIR ${CMAKE_BINARY_DIR}/_deps/imgui-src)
-
-# ImGui source files
 set(IMGUI_SOURCES
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_draw.cpp
