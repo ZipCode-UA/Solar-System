@@ -1,7 +1,3 @@
-cmake_minimum_required(VERSION 3.30)
-
-project(SolarSystem)
-
 set(Sources
         # Sources
         "MilkyWay.cpp"
