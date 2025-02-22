@@ -6,10 +6,11 @@
 #include "CelestialBody.h"
 #include "MilkyWay.h"
 
-int main()
-{
-  std::vector<CelestialBody> MilkyWay = getMilkyWay();
-}
+// TODO: Move this to GUI.cpp
+// int main()
+// {
+//   std::vector<CelestialBody> MilkyWay = getMilkyWay();
+// }
 
 double getDistance(const CelestialBody &a, const CelestialBody &b)
 {

@@ -14,10 +14,17 @@ add_executable(${PROJECT_NAME} "src/SolarSystem.cpp")
 # Dirs
 add_subdirectory(include)
 add_subdirectory(src)
-target_link_libraries(${PROJECT_NAME} include)
-target_link_libraries(${PROJECT_NAME} src)
+target_link_libraries(${PROJECT_NAME} PRIVATE include)
+target_link_libraries(${PROJECT_NAME} PRIVATE src)
 
-# Add Raylib
+# make run
+add_custom_target(run
+    COMMAND ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
+    DEPENDS ${PROJECT_NAME}
+    WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
+
+# Add Raylib using FetchContent
 include(FetchContent)
 set(FETCHCONTENT_QUIET FALSE)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE) # don't build the supplied examples
@@ -31,3 +38,4 @@ FetchContent_Declare(
 )
 
 FetchContent_MakeAvailable(raylib)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
