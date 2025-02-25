@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-# TODO - Fetch ImGui
-
 # Executable
 add_executable(${PROJECT_NAME} "src/SolarSystem.cpp")
 
@@ -36,6 +34,4 @@ FetchContent_Declare(
     GIT_TAG "master"
     GIT_PROGRESS TRUE
 )
-
 FetchContent_MakeAvailable(raylib)
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
