@@ -51,7 +51,21 @@ std::vector<CelestialBody> getMilkyWay()
 
   // TODO - Add Mercury
 
-  // TODO - Add Venus
+  CelestialBody Venus
+  (
+    4.8673 * pow(10, 24),
+    92.843 * pow(10, 10),
+    6051.8,
+    5243,
+    35.02,
+    224.701,
+    8.87,
+    107.480 * pow(10, 6),
+    108.941 * pow(10, 6),
+    0,
+    false
+  );
+  MilkyWay.push_back(Venus);
 
   CelestialBody Earth
   (
@@ -59,7 +73,7 @@ std::vector<CelestialBody> getMilkyWay()
     108.321 * pow(10, 10),
     6371,
     5513,
-    30.03,
+    29.78,
     365.256,
     9.82,
     147.095 * pow(10, 6),
@@ -89,11 +103,54 @@ std::vector<CelestialBody> getMilkyWay()
 
   // TODO - Add Saturn
 
-  // TODO - Add Uranus
+  CelestialBody Uranus
+  (
+    8.6811 * pow(10, 24),
+    6.833 * pow(10, 13),
+    25362,
+    1270,
+    6.79,
+    30685.4,
+    9.01,
+    2732.696 * pow(10, 6),
+    3001.39 * pow(10, 6),
+    28,
+    true
+  );
+  MilkyWay.push_back(Uranus);
   
   // TODO - Add Neptune
+  CelestialBody Neptune
+  (
+    102.409 * pow(10, 24),
+    6254 * pow(10, 10),
+    24622,
+    1638,
+    5.45,
+    60189.018,
+    11.27,
+    4471.050 * pow(10, 6),
+    4558.857 * pow(10, 6),
+    16,
+    true
+  );
+  MilkyWay.push_back(Neptune); 
 
-  // TODO - Add Pluto :)
+  CelestialBody Pluto
+  (
+    0.01303 * pow(10, 24),
+    0.702 * pow(10, 10),
+    1188,
+    1854,
+    4.64,
+    90560,
+    .62,
+    4434.987 * pow(10, 6),
+    7304.326 * pow(10, 6),
+    5,
+    false
+  );
+  MilkyWay.push_back(Pluto);
 
   // TODO - Add Chiron :)
 
