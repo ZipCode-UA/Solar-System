@@ -49,7 +49,21 @@ std::vector<CelestialBody> getMilkyWay()
   );
   MilkyWay.push_back(Sun);
 
-  // TODO - Add Mercury
+  CelestialBody Mercury
+  (
+    0.3301 * pow(10, 24),
+    6.083 * pow(10, 10),
+    2439.7,
+    5429,
+    47.36,
+    87.969,
+    3.70,
+    46.000 * pow(10, 6),
+    69.818 * pow(10, 6),
+    0,
+    false
+  );
+  MilkyWay.push_back(Mercury);
 
   CelestialBody Venus
   (
