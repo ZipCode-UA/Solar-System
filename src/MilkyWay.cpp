@@ -35,6 +35,7 @@ std::vector<CelestialBody> getMilkyWay()
 
   CelestialBody Sun
   (
+    "sun",
     1.989 * pow(10, 30),
     1.412 * pow(10, 18),
     6.957 * pow(10, 5),
@@ -53,6 +54,7 @@ std::vector<CelestialBody> getMilkyWay()
 
   CelestialBody Venus
   (
+    "Venus",
     4.8673 * pow(10, 24),
     92.843 * pow(10, 10),
     6051.8,
@@ -69,6 +71,7 @@ std::vector<CelestialBody> getMilkyWay()
 
   CelestialBody Earth
   (
+    "Earth",
     5.9722 * pow(10, 24),
     108.321 * pow(10, 10),
     6371,
@@ -85,6 +88,7 @@ std::vector<CelestialBody> getMilkyWay()
   
   CelestialBody Mars
   (
+    "Mars",
     6.4159 * pow(10, 23),
     16.312 * pow(10, 10),
     3389.5,
@@ -105,6 +109,7 @@ std::vector<CelestialBody> getMilkyWay()
 
   CelestialBody Uranus
   (
+    "Uranus",
     8.6811 * pow(10, 24),
     6.833 * pow(10, 13),
     25362,
@@ -122,6 +127,7 @@ std::vector<CelestialBody> getMilkyWay()
   // TODO - Add Neptune
   CelestialBody Neptune
   (
+    "Neptune",
     102.409 * pow(10, 24),
     6254 * pow(10, 10),
     24622,
@@ -138,6 +144,7 @@ std::vector<CelestialBody> getMilkyWay()
 
   CelestialBody Pluto
   (
+    "Pluto",
     0.01303 * pow(10, 24),
     0.702 * pow(10, 10),
     1188,

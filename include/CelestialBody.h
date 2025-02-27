@@ -1,9 +1,11 @@
 #ifndef CELESTIALBODY_H
 #define CELESTIALBODY_H
+#include <string>
 
 class CelestialBody
 { 
 private: 
+  std::string name;
   double mass;
   double volume;
   double radius;
@@ -17,8 +19,9 @@ private:
   bool ring;
 
 public:
-  CelestialBody(double mass, double volume, double radius, double density, double velocity, double orbit, double gravity, double perihelion, double aphelion, int satellites, bool ring)
+  CelestialBody(std::string name, double mass, double volume, double radius, double density, double velocity, double orbit, double gravity, double perihelion, double aphelion, int satellites, bool ring)
   {
+    this->name = name;
     this->mass = mass;
     this->volume = volume;
     this->radius = radius;
