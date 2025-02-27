@@ -19,7 +19,7 @@ private:
   bool ring;
 
 public:
-  CelestialBody(std::string name, double mass, double volume, double radius, double density, double velocity, double orbit, double gravity, double perihelion, double aphelion, int satellites, bool ring)
+  CelestialBody(const char* name, double mass, double volume, double radius, double density, double velocity, double orbit, double gravity, double perihelion, double aphelion, int satellites, bool ring)
   {
     this->name = name;
     this->mass = mass;
