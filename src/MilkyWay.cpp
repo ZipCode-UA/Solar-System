@@ -35,7 +35,7 @@ std::vector<CelestialBody> getMilkyWay()
 
   CelestialBody Sun
   (
-    "sun",
+    "Sun",
     1.989 * pow(10, 30),
     1.412 * pow(10, 18),
     6.957 * pow(10, 5),
