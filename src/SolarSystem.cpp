@@ -12,12 +12,20 @@
 //   std::vector<CelestialBody> MilkyWay = getMilkyWay();
 // }
 
+
+/**
+  Calculates the approximate distance between two celestial bodies. This is only an average distance, as real orbits are elliptical.
+
+  @param a - The first celestial body.
+  @param b - The second celestial body.
+  @return The distance between the two celestial bodies.
+*/
 double getDistance(const CelestialBody &a, const CelestialBody &b)
 {
-  // TODO - Calculate distance from the central point between objects a and b
-  double distance = 0; // km
+  double meanDistanceA = (a.getPerihelion() + a.getAphelion()) / 2;
+  double meanDistanceB = (b.getPerihelion() + b.getAphelion()) / 2;
 
-  return distance;
+  return fabs(meanDistanceA - meanDistanceB);
 }
 
 double getAttractionForce(const CelestialBody &a, const CelestialBody &b)
