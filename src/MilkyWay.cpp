@@ -65,22 +65,6 @@ std::vector<CelestialBody> getMilkyWay()
   );
   MilkyWay.push_back(Mercury);
 
-  CelestialBody Venus
-  (
-    4.8673 * pow(10, 24),
-    92.843 * pow(10, 10),
-    6051.8,
-    5243,
-    35.02,
-    224.701,
-    8.87,
-    107.480 * pow(10, 6),
-    108.941 * pow(10, 6),
-    0,
-    false
-  );
-  MilkyWay.push_back(Venus);
-
   CelestialBody Earth
   (
     5.9722 * pow(10, 24),
