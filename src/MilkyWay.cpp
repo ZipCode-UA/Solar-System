@@ -118,7 +118,22 @@ std::vector<CelestialBody> getMilkyWay()
   );
   MilkyWay.push_back(Mars);
 
-  // TODO - Add Jupiter
+  CelestialBody Jupiter
+  (
+    "Jupiter",
+    1898.13 * pow(10, 24),
+    143128 * pow(10, 10),
+    69911,
+    1326,
+    13.06,
+    4332.59,
+    25.92,
+    740.595 * pow(10, 6),
+    816.363 * pow(10, 6),
+    95,
+    true
+  );
+  MilkyWay.push_back(Jupiter);
 
   // TODO - Add Saturn
 
