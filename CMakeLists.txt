@@ -27,7 +27,7 @@ add_custom_target(run
 )
 
 # Executable
-add_executable(${PROJECT_NAME} "src/SolarSystem.cpp")
+add_executable(${PROJECT_NAME} "src/main.cpp")
 
 # Dirs
 add_subdirectory(include)
