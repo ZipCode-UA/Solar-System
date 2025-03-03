@@ -5,12 +5,18 @@
 
 #include "CelestialBody.h"
 #include "MilkyWay.h"
+#include "Window.h"
 
-// TODO: Move this to GUI.cpp
-// int main()
-// {
-//   std::vector<CelestialBody> MilkyWay = getMilkyWay();
-// }
+int main()
+{
+  std::vector<CelestialBody> MilkyWay = getMilkyWay();
+
+  Window window;
+  while(window.Open())
+  {
+    window.Update();
+  }
+}
 
 double getDistance(const CelestialBody &a, const CelestialBody &b)
 {

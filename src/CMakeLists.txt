@@ -2,7 +2,6 @@ set(Sources
         # Sources
         "MilkyWay.cpp"
         "SolarSystem.cpp"
-        "GUI.cpp" # TODO: Remove
         "Window.cpp"
         #".cpp"
 )
