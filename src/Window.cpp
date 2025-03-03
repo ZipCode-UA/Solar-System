@@ -30,11 +30,11 @@ const float earthRadius = 0.6f;
 const float earthOrbitRadius = 8.0f;
 const float moonRadius = 0.16f;
 const float moonOrbitRadius = 1.5f;
-float rotationSpeed = 0.2f;         // General system rotation speed
-float earthRotation = 0.0f;         // Rotation of earth around itself (days) in degrees
-float earthOrbitRotation = 0.0f;    // Rotation of earth around the Sun (years) in degrees
-float moonRotation = 0.0f;          // Rotation of moon around itself
-float moonOrbitRotation = 0.0f;     // Rotation of moon around earth in degrees
+float rotationSpeed = 0.2f; // General system rotation speed
+float earthRotation = 0.0f; // Rotation of earth around itself (days) in degrees
+float earthOrbitRotation = 0.0f; // Rotation of earth around the Sun (years) in degrees
+float moonRotation = 0.0f; // Rotation of moon around itself
+float moonOrbitRotation = 0.0f; // Rotation of moon around earth in degrees
 
 Window::Window()
 {
@@ -51,10 +51,10 @@ Window::~Window()
 void Window::InitCamera()
 {
   camera.position = (Vector3){ 16.0f, 16.0f, 16.0f }; // Camera position
-  camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
-  camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-  camera.fovy = 45.0f;                                // Camera field-of-view Y
-  camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+  camera.target = (Vector3){ 0.0f, 0.0f, 0.0f }; // Camera looking at point
+  camera.up = (Vector3){ 0.0f, 1.0f, 0.0f }; // Camera up vector (rotation towards target)
+  camera.fovy = 45.0f; // Camera field-of-view Y
+  camera.projection = CAMERA_PERSPECTIVE; // Camera projection type
 }
 
 void Window::DrawSphereBasic(Color color)
@@ -114,37 +114,30 @@ void Window::Update()
     BeginMode3D(camera);
 
         rlPushMatrix();
-            rlScalef(sunRadius, sunRadius, sunRadius);          // Scale Sun
-            DrawSphereBasic(GOLD);                              // Draw the Sun
+            rlScalef(sunRadius, sunRadius, sunRadius); // Scale Sun
+            DrawSphereBasic(GOLD); // Draw the Sun
         rlPopMatrix();
 
         rlPushMatrix();
-            rlRotatef(earthOrbitRotation, 0.0f, 1.0f, 0.0f);    // Rotation for Earth orbit around Sun
-            rlTranslatef(earthOrbitRadius, 0.0f, 0.0f);         // Translation for Earth orbit
+            rlRotatef(earthOrbitRotation, 0.0f, 1.0f, 0.0f); // Rotation for Earth orbit around Sun
+            rlTranslatef(earthOrbitRadius, 0.0f, 0.0f); // Translation for Earth orbit
 
             rlPushMatrix();
-                rlRotatef(earthRotation, 0.25, 1.0, 0.0);       // Rotation for Earth itself
-                rlScalef(earthRadius, earthRadius, earthRadius);// Scale Earth
+                rlRotatef(earthRotation, 0.25, 1.0, 0.0); // Rotation for Earth itself
+                rlScalef(earthRadius, earthRadius, earthRadius); // Scale Earth
 
-                DrawSphereBasic(BLUE);                          // Draw the Earth
+                DrawSphereBasic(BLUE); // Draw the Earth
             rlPopMatrix();
 
-            rlRotatef(moonOrbitRotation, 0.0f, 1.0f, 0.0f);     // Rotation for Moon orbit around Earth
-            rlTranslatef(moonOrbitRadius, 0.0f, 0.0f);          // Translation for Moon orbit
-            rlRotatef(moonRotation, 0.0f, 1.0f, 0.0f);          // Rotation for Moon itself
-            rlScalef(moonRadius, moonRadius, moonRadius);       // Scale Moon
+            rlRotatef(moonOrbitRotation, 0.0f, 1.0f, 0.0f); // Rotation for Moon orbit around Earth
+            rlTranslatef(moonOrbitRadius, 0.0f, 0.0f); // Translation for Moon orbit
+            rlRotatef(moonRotation, 0.0f, 1.0f, 0.0f); // Rotation for Moon itself
+            rlScalef(moonRadius, moonRadius, moonRadius); // Scale Moon
 
-            DrawSphereBasic(LIGHTGRAY);                         // Draw the Moon
+            DrawSphereBasic(LIGHTGRAY); // Draw the Moon
         rlPopMatrix();
 
-        // Some reference elements (not affected by previous matrix transformations)
-        DrawCircle3D((Vector3){ 0.0f, 0.0f, 0.0f }, earthOrbitRadius, (Vector3){ 1, 0, 0 }, 90.0f, Fade(RED, 0.5f));
-        DrawGrid(20, 1.0f);
-
     EndMode3D();
-
-    DrawText("EARTH ORBITING AROUND THE SUN!", 400, 10, 20, MAROON);
-    DrawFPS(10, 10);
 
   EndDrawing();
 }
