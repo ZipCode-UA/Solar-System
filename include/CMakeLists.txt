@@ -3,6 +3,7 @@ set(Includes
         "CelestialBody.h"
         "MilkyWay.h"
         "SolarSystem.h"
+        "Window.h"
         #".h"
 )
 

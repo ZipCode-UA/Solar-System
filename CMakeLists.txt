@@ -37,3 +37,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE src)
 
 # Link raylib library
 target_link_libraries(src PRIVATE raylib)
+target_link_libraries(include INTERFACE raylib)
