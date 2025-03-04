@@ -89,21 +89,18 @@ double CelestialBody::scale(double value) const
 
   if (type == "radius")
   {
-    logSmallest = log10(Celestial::smallestRadius);
-    logGreatest = log10(Celestial::greatestRadius);
+    logSmallest = log(Celestial::smallestRadius);
+    logGreatest = log(Celestial::greatestRadius);
   }
   else if (type == "orbitRadius")
   {
-    logSmallest = log10(Celestial::smallestOrbitRadius);
-    logGreatest = log10(Celestial::greatestOrbitRadius);
+    logSmallest = log(Celestial::smallestOrbitRadius);
+    logGreatest = log(Celestial::greatestOrbitRadius);
   }
 
-  double logValue = log10(value);
+  double logValue = log(value);
 
-  // TODO: Smallest = 0 here
-  double scaled = ((logValue - logSmallest) / (logGreatest - logSmallest)) * Celestial::scaleTargetSize;
-
-  return scaled;
+  return (Celestial::scaleTargetMinSize + (((logValue - logSmallest) / (logGreatest - logSmallest)) * (Celestial::scaleTargetMaxSize - Celestial::scaleTargetMinSize)));
 }
 
 double CelestialBody::getDistance(const CelestialBody& compare) const
