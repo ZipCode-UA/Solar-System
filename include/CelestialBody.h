@@ -1,7 +1,6 @@
 #ifndef CELESTIALBODY_H
 #define CELESTIALBODY_H
 
-#include <cmath>
 #include <string>
 #include <vector>
 
