@@ -1,8 +1,112 @@
 #include "CelestialBody.h"
 
 #include <cmath>
+#include <string>
 
-double getDistance(const CelestialBody &a, const CelestialBody &b)
+namespace Celestial
+{
+  // TODO: Sort vector by orbitRadius from least to highest
+  void sort(std::vector<CelestialBody>& SolarSystem)
+  {
+
+  }
+  
+  void setBounds(const std::vector<CelestialBody>& SolarSystem)
+  {
+    setSmallestRadius(SolarSystem);
+    setSmallestOrbitRadius(SolarSystem);
+    setGreatestRadius(SolarSystem);
+    setGreatestOrbitRadius(SolarSystem);
+  }
+  
+  void setSmallestRadius(const std::vector<CelestialBody>& SolarSystem)
+  {
+    double smallest = SolarSystem[0].radius;
+  
+    for (const auto iter : SolarSystem)
+      if (iter.radius < smallest)
+        smallest = iter.radius; 
+  
+    smallestRadius = smallest;
+  }
+  
+  void setSmallestOrbitRadius(const std::vector<CelestialBody>& SolarSystem)
+  {
+    double smallest = SolarSystem[1].orbitRadius;
+  
+    for (const auto iter : SolarSystem)
+      if (iter.orbitRadius < smallest && iter.orbitRadius != 0)
+        smallest = iter.orbitRadius; 
+  
+    smallestOrbitRadius = smallest;
+  }
+  
+  void setGreatestRadius(const std::vector<CelestialBody>& SolarSystem)
+  {
+    double greatest = SolarSystem[0].radius;
+  
+    for (const auto iter : SolarSystem)
+      if (iter.radius > greatest)
+        greatest = iter.radius; 
+  
+    greatestRadius = greatest;
+  }
+  
+  void setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem)
+  {
+    double greatest = SolarSystem[0].orbitRadius;
+  
+    for (const auto iter : SolarSystem)
+      if (iter.orbitRadius > greatest)
+        greatest = iter.orbitRadius; 
+  
+    greatestOrbitRadius = greatest;
+  }
+}
+
+CelestialBody::CelestialBody(const std::string& name, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, int satellites, bool ring)
+  : name(name),
+    mass(mass),
+    volume(volume),
+    density(density),
+    gravity(gravity),
+    radius(radius),
+    velocity(velocity),
+    perihelion(perihelion),
+    aphelion(aphelion),
+    orbit(orbit),
+    orbitRadius((perihelion + aphelion) / 2),
+    satellites(satellites),
+    ring(ring) { }
+
+double CelestialBody::scale(double value) const
+{
+  if (value == 0)
+    return 0;
+
+  double logSmallest;
+  double logGreatest;
+
+  if (type == "radius")
+  {
+    logSmallest = log10(Celestial::smallestRadius);
+    logGreatest = log10(Celestial::greatestRadius);
+  }
+  else if (type == "orbitRadius")
+  {
+    logSmallest = log10(Celestial::smallestOrbitRadius);
+    logGreatest = log10(Celestial::greatestOrbitRadius);
+  }
+
+  double logValue = log10(value);
+
+  // TODO: Smallest = 0 here
+  double scaled = ((logValue - logSmallest) / (logGreatest - logSmallest)) * Celestial::scaleTargetSize;
+
+  return scaled;
+}
+
+double CelestialBody::getDistance(const CelestialBody& compare) const
 {
   // TODO - Calculate distance from the central point between objects a and b
   double distance = 0; // km
@@ -10,10 +114,10 @@ double getDistance(const CelestialBody &a, const CelestialBody &b)
   return distance;
 }
 
-double getAttractionForce(const CelestialBody &a, const CelestialBody &b)
+double CelestialBody::getAttractionForce(const CelestialBody& compare) const
 {
   const double gravitationalForce = 6.6743 * pow(10, -11); // m^3/kg^2
-  const double distance = getDistance(a, b);
+  const double distance = getDistance(compare);
   
-  return gravitationalForce * ((a.getMass() * b.getMass()) / (pow(distance, 2)));
+  return gravitationalForce * ((mass * compare.getMass()) / (pow(distance, 2)));
 }

@@ -20,27 +20,23 @@
 #include "Window.h"
 
 #include <cmath>
+#include <vector>
 
 #include "raylib.h"
 #include "rlgl.h"
 
-// TODO: Use actual values
-const float sunRadius = 4.0f;
-const float earthRadius = 0.6f;
-const float earthOrbitRadius = 8.0f;
-const float moonRadius = 0.16f;
-const float moonOrbitRadius = 1.5f;
-float rotationSpeed = 0.2f; // General system rotation speed
-float earthRotation = 0.0f; // Rotation of earth around itself (days) in degrees
-float earthOrbitRotation = 0.0f; // Rotation of earth around the Sun (years) in degrees
-float moonRotation = 0.0f; // Rotation of moon around itself
-float moonOrbitRotation = 0.0f; // Rotation of moon around earth in degrees
+#include "CelestialBody.h"
 
-Window::Window()
+Window::Window(const std::vector<CelestialBody>& SolarSystem)
+  : SolarSystem(SolarSystem),
+    focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
 {
-  InitWindow(800, 800, "Solar System");
+  InitWindow(1200, 1200, "Solar System");
   InitCamera();
   SetTargetFPS(60);
+
+  for (const auto iter : SolarSystem)
+    rotation.push_back(0);
 }
 
 Window::~Window()
@@ -50,9 +46,9 @@ Window::~Window()
 
 void Window::InitCamera()
 {
-  camera.position = (Vector3){ 16.0f, 16.0f, 16.0f }; // Camera position
-  camera.target = (Vector3){ 0.0f, 0.0f, 0.0f }; // Camera looking at point
-  camera.up = (Vector3){ 0.0f, 1.0f, 0.0f }; // Camera up vector (rotation towards target)
+  camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
+  camera.target = Vector3{ 0.0f, 0.0f, 0.0f }; // Camera looking at point
+  camera.up = Vector3{ 0.0f, 1.0f, 0.0f }; // Camera up vector (rotation towards target)
   camera.fovy = 45.0f; // Camera field-of-view Y
   camera.projection = CAMERA_PERSPECTIVE; // Camera projection type
 }
@@ -100,12 +96,8 @@ void Window::DrawSphereBasic(Color color)
 void Window::Update()
 {
   UpdateCamera(&camera, CAMERA_ORBITAL);
-
-  // TODO: Use actual values
-  earthRotation += (5.0f*rotationSpeed);
-  earthOrbitRotation += (365/360.0f*(5.0f*rotationSpeed)*rotationSpeed);
-  moonRotation += (2.0f*rotationSpeed);
-  moonOrbitRotation += (8.0f*rotationSpeed);
+  
+  // TODO: Create parallel vector of rotation data and calculate rotation
 
   BeginDrawing();
 
@@ -113,29 +105,27 @@ void Window::Update()
 
     BeginMode3D(camera);
 
-        rlPushMatrix();
-            rlScalef(sunRadius, sunRadius, sunRadius); // Scale Sun
-            DrawSphereBasic(GOLD); // Draw the Sun
-        rlPopMatrix();
+      int i = 0;
+      for (const auto iter : SolarSystem)
+      {
+        const float scaledOrbitRadius = static_cast<float>(iter.getOrbitRadius());
+        const float scaledRadius = static_cast<float>(iter.getRadius());
 
         rlPushMatrix();
-            rlRotatef(earthOrbitRotation, 0.0f, 1.0f, 0.0f); // Rotation for Earth orbit around Sun
-            rlTranslatef(earthOrbitRadius, 0.0f, 0.0f); // Translation for Earth orbit
 
-            rlPushMatrix();
-                rlRotatef(earthRotation, 0.25, 1.0, 0.0); // Rotation for Earth itself
-                rlScalef(earthRadius, earthRadius, earthRadius); // Scale Earth
+          rlRotatef(0.0f, 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit
+          rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f); // Translation of CelestialBody orbit
 
-                DrawSphereBasic(BLUE); // Draw the Earth
-            rlPopMatrix();
+          rlPushMatrix();
+            // TODO: Create parallel vector of rotation data and calculate rotation
+            rlRotatef(rotation[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody
+            rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
+            DrawSphereBasic(GOLD); // Color CelestialBody
+          rlPopMatrix();
 
-            rlRotatef(moonOrbitRotation, 0.0f, 1.0f, 0.0f); // Rotation for Moon orbit around Earth
-            rlTranslatef(moonOrbitRadius, 0.0f, 0.0f); // Translation for Moon orbit
-            rlRotatef(moonRotation, 0.0f, 1.0f, 0.0f); // Rotation for Moon itself
-            rlScalef(moonRadius, moonRadius, moonRadius); // Scale Moon
-
-            DrawSphereBasic(LIGHTGRAY); // Draw the Moon
         rlPopMatrix();
+        ++i;
+      }
 
     EndMode3D();
 
