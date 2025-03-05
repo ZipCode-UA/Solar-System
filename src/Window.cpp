@@ -31,7 +31,7 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
   : SolarSystem(SolarSystem),
     focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
 {
-  InitWindow(1200, 1200, "Solar System");
+  InitWindow(1600, 1000, "Solar System");
   InitCamera();
   SetTargetFPS(60);
 

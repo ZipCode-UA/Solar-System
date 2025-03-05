@@ -29,7 +29,7 @@ private:
   std::vector<float> rotation;
 
 private:
-  const float focalScale = 5;
+  const float focalScale = 1;
   const float focalSize;
 };
 
