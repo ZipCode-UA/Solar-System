@@ -96,8 +96,8 @@ double CelestialBody::linearScale(double value) const
   if (value == 0)
     return 0;
 
-  double scaleTargetMinOrbitRadiusSize = Celestial::scaleTargetMaxRadiusSize + Celestial::scaleTargetMaxRadiusSize;
-  double scaleTargetMaxOrbitRadiusSize = scaleTargetMinOrbitRadiusSize * 3;
+  double scaleTargetMinOrbitRadiusSize = Celestial::scaleTargetMaxRadiusSize + Celestial::scaleTargetMinRadiusSize;
+  double scaleTargetMaxOrbitRadiusSize = scaleTargetMinOrbitRadiusSize * 5;
 
   double smallest = Celestial::smallestOrbitRadius;
   double greatest = Celestial::greatestOrbitRadius;
