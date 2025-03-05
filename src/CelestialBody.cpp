@@ -96,10 +96,13 @@ double CelestialBody::linearScale(double value) const
   if (value == 0)
     return 0;
 
+  double scaleTargetMinOrbitRadiusSize = Celestial::scaleTargetMaxRadiusSize + Celestial::scaleTargetMaxRadiusSize;
+  double scaleTargetMaxOrbitRadiusSize = scaleTargetMinOrbitRadiusSize * 3;
+
   double smallest = Celestial::smallestOrbitRadius;
   double greatest = Celestial::greatestOrbitRadius;
 
-  return Celestial::scaleTargetMinOrbitRadiusSize + (((value - smallest) / (greatest - smallest)) * (Celestial::scaleTargetMaxOrbitRadiusSize - Celestial::scaleTargetMinOrbitRadiusSize));
+  return scaleTargetMinOrbitRadiusSize + (((value - smallest) / (greatest - smallest)) * (scaleTargetMaxOrbitRadiusSize - scaleTargetMinOrbitRadiusSize));
 }
 
 double CelestialBody::getDistance(const CelestialBody& compare) const

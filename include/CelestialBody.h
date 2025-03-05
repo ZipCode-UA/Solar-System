@@ -18,9 +18,7 @@ namespace Celestial
   void setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
 
   const double scaleTargetMinRadiusSize = 1;
-  const double scaleTargetMaxRadiusSize = 50;
-  const double scaleTargetMinOrbitRadiusSize = scaleTargetMaxRadiusSize + scaleTargetMinRadiusSize;
-  const double scaleTargetMaxOrbitRadiusSize = scaleTargetMaxRadiusSize * 10;
+  const double scaleTargetMaxRadiusSize = 100;
   static double smallestRadius;
   static double smallestOrbitRadius;
   static double greatestRadius;
