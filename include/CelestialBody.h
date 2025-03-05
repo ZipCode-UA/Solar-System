@@ -19,8 +19,8 @@ namespace Celestial
 
   const double scaleTargetMinRadiusSize = 1;
   const double scaleTargetMaxRadiusSize = 50;
-  const double scaleTargetMinOrbitRadiusSize = 1;
-  const double scaleTargetMaxOrbitRadiusSize = 50;
+  const double scaleTargetMinOrbitRadiusSize = scaleTargetMaxRadiusSize + scaleTargetMinRadiusSize;
+  const double scaleTargetMaxOrbitRadiusSize = scaleTargetMaxRadiusSize * 10;
   static double smallestRadius;
   static double smallestOrbitRadius;
   static double greatestRadius;
