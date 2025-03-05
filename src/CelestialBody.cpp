@@ -79,28 +79,27 @@ CelestialBody::CelestialBody(const std::string& name, double mass, double volume
     satellites(satellites),
     ring(ring) { }
 
-double CelestialBody::scale(double value) const
+double CelestialBody::logScale(double value) const
 {
   if (value == 0)
     return 0;
 
-  double logSmallest;
-  double logGreatest;
-
-  if (type == "radius")
-  {
-    logSmallest = log(Celestial::smallestRadius);
-    logGreatest = log(Celestial::greatestRadius);
-  }
-  else if (type == "orbitRadius")
-  {
-    logSmallest = log(Celestial::smallestOrbitRadius);
-    logGreatest = log(Celestial::greatestOrbitRadius);
-  }
-
   double logValue = log(value);
+  double logSmallest = log(Celestial::smallestRadius);
+  double logGreatest = log(Celestial::greatestRadius);
 
-  return (Celestial::scaleTargetMinSize + (((logValue - logSmallest) / (logGreatest - logSmallest)) * (Celestial::scaleTargetMaxSize - Celestial::scaleTargetMinSize)));
+  return Celestial::scaleTargetMinRadiusSize + (((logValue - logSmallest) / (logGreatest - logSmallest)) * (Celestial::scaleTargetMaxRadiusSize - Celestial::scaleTargetMinRadiusSize));
+}
+
+double CelestialBody::linearScale(double value) const
+{
+  if (value == 0)
+    return 0;
+
+  double smallest = Celestial::smallestOrbitRadius;
+  double greatest = Celestial::greatestOrbitRadius;
+
+  return Celestial::scaleTargetMinOrbitRadiusSize + (((value - smallest) / (greatest - smallest)) * (Celestial::scaleTargetMaxOrbitRadiusSize - Celestial::scaleTargetMinOrbitRadiusSize));
 }
 
 double CelestialBody::getDistance(const CelestialBody& compare) const

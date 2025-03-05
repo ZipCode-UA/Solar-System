@@ -8,6 +8,7 @@ class CelestialBody;
 
 namespace Celestial
 {
+  // TODO: Add to CelestialBody class as static members
   void sort(std::vector<CelestialBody>& SolarSystem);
   void setBounds(const std::vector<CelestialBody>& SolarSystem);
 
@@ -16,8 +17,10 @@ namespace Celestial
   void setGreatestRadius(const std::vector<CelestialBody>& SolarSystem);
   void setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
 
-  const double scaleTargetMinSize = 5;
-  const double scaleTargetMaxSize = 50;
+  const double scaleTargetMinRadiusSize = 1;
+  const double scaleTargetMaxRadiusSize = 50;
+  const double scaleTargetMinOrbitRadiusSize = 1;
+  const double scaleTargetMaxOrbitRadiusSize = 50;
   static double smallestRadius;
   static double smallestOrbitRadius;
   static double greatestRadius;
@@ -27,20 +30,19 @@ namespace Celestial
 class CelestialBody
 {
 private:
+  // TODO: Add to CelestialBody class as static members
   friend void Celestial::setSmallestRadius(const std::vector<CelestialBody>& SolarSystem);
   friend void Celestial::setSmallestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
   friend void Celestial::setGreatestRadius(const std::vector<CelestialBody>& SolarSystem);
   friend void Celestial::setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
-
-private:
- const std::string type = "radius";
 
 public:
   CelestialBody(const std::string& name, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, int satellites, bool ring);
   ~CelestialBody() { };
 
 private:
-  double scale(double value) const;
+  double logScale(double value) const;
+  double linearScale(double value) const;
 
 public:
   double getDistance(const CelestialBody& compare) const;
@@ -53,12 +55,12 @@ public:
   double getVolume() const { return this->volume; }
   double getDensity() const { return this->density; }
   double getGravity() const { return this->gravity; }
-  double getRadius() const { return scale(this->radius); }
+  double getRadius() const { return logScale(this->radius); }
   double getVelocity() const { return this->velocity; }
   double getPerihelion() const { return this->perihelion; }
   double getAphelion() const { return this->aphelion; }
   double getOrbit() const { return this->orbit; }
-  double getOrbitRadius() const { return scale(this->orbitRadius); }
+  double getOrbitRadius() const { return linearScale(this->orbitRadius); }
   int getSatellites() const { return this->satellites; }
   bool getRing() const { return this->ring; }
 
