@@ -1,126 +1,81 @@
 #ifndef CELESTIALBODY_H
 #define CELESTIALBODY_H
 
+#include <string>
+#include <vector>
+
+class CelestialBody;
+
+namespace Celestial
+{
+  // TODO: Add to CelestialBody class as static members
+  void sort(std::vector<CelestialBody>& SolarSystem);
+  void setBounds(const std::vector<CelestialBody>& SolarSystem);
+
+  void setSmallestRadius(const std::vector<CelestialBody>& SolarSystem);
+  void setSmallestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
+  void setGreatestRadius(const std::vector<CelestialBody>& SolarSystem);
+  void setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
+
+  const double scaleTargetMinRadiusSize = 1;
+  const double scaleTargetMaxRadiusSize = 100;
+  static double smallestRadius;
+  static double smallestOrbitRadius;
+  static double greatestRadius;
+  static double greatestOrbitRadius;
+}
+
 class CelestialBody
-{ 
-private: 
-  double mass;
-  double volume;
-  double radius;
-  double density;
-  double velocity;
-  double orbit;
-  double gravity;
-  double perihelion;
-  double aphelion;
-  int satellites;
-  bool ring;
+{
+private:
+  // TODO: Add to CelestialBody class as static members
+  friend void Celestial::setSmallestRadius(const std::vector<CelestialBody>& SolarSystem);
+  friend void Celestial::setSmallestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
+  friend void Celestial::setGreatestRadius(const std::vector<CelestialBody>& SolarSystem);
+  friend void Celestial::setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
 
 public:
-  CelestialBody(double mass, double volume, double radius, double density, double velocity, double orbit, double gravity, double perihelion, double aphelion, int satellites, bool ring)
-  {
-    this->mass = mass;
-    this->volume = volume;
-    this->radius = radius;
-    this->density = density;
-    this->velocity = velocity;
-    this->orbit = orbit;
-    this->gravity = gravity;
-    this->perihelion = perihelion;
-    this->aphelion = aphelion;
-    this->satellites = satellites;
-    this->ring = ring;
-  }
-
-  double getMass() const {
-    return this->mass;
-  }
-
-  double getVolume() const {
-    return this->volume;
-  }
-
-  double getRadius() const {
-    return this->radius;
-  }
-
-  double getDensity() const {
-    return this->density;
-  }
-
-  double getVelocity() const {
-    return this->velocity;
-  }
-
-  double getOrbit() const {
-    return this->orbit;
-  }
-
-  double getGravity() const {
-    return this->gravity;
-  }
-
-  double getPerihelion() const {
-    return this->perihelion;
-  }
-
-  double getAphelion() const {
-    return this->aphelion;
-  }
-
-  int getSatellites() const {
-    return this->satellites;
-  }
-
-  bool getRing() const {
-    return this->ring;
-  }
-
-  void setMass(double mass) {
-    this->mass = mass;
-  }
-
-  void setVolume(double volume) {
-    this->volume = volume;
-  }
-
-  void setRadius(double radius) {
-    this->radius = radius;
-  }
-
-  void setDensity(double density) {
-    this->density = density;
-  }
-
-  void setVelocity(double velocity) {
-    this->velocity = velocity;
-  }
-
-  void setOrbit(double orbit) {
-    this->orbit = orbit;
-  }
-
-  void setGravity(double gravity) {
-    this->gravity = gravity;
-  }
-
-  void setPerihelion(double perihelion) {
-    this->perihelion = perihelion;
-  }
-
-  void setAphelion(double aphelion) {
-    this->aphelion = aphelion;
-  }
-
-  void setSatellites(int satellites) {
-    this->satellites = satellites;
-  }
-
-  void setRing(bool ring) {
-    this->ring = ring;
-  }
-
+  CelestialBody(const std::string& name, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, int satellites, bool ring);
   ~CelestialBody() { };
+
+private:
+  double logScale(double value) const;
+  double linearScale(double value) const;
+
+public:
+  double getDistance(const CelestialBody& compare) const;
+  double getAttractionForce(const CelestialBody& compare) const;
+
+public:
+  // Accessors
+  std::string getName() const { return this->name; }
+  double getMass() const { return this->mass; }
+  double getVolume() const { return this->volume; }
+  double getDensity() const { return this->density; }
+  double getGravity() const { return this->gravity; }
+  double getRadius() const { return logScale(this->radius); }
+  double getVelocity() const { return this->velocity; }
+  double getPerihelion() const { return this->perihelion; }
+  double getAphelion() const { return this->aphelion; }
+  double getOrbit() const { return this->orbit; }
+  double getOrbitRadius() const { return linearScale(this->orbitRadius); }
+  int getSatellites() const { return this->satellites; }
+  bool getRing() const { return this->ring; }
+
+private: 
+  const std::string name;
+  const double mass;
+  const double volume;
+  const double density;
+  const double gravity;
+  const double radius;
+  const double velocity;
+  const double perihelion;
+  const double aphelion;
+  const double orbit;
+  const double orbitRadius;
+  const int satellites;
+  const bool ring;
 };
 
 #endif // CELESTIALBODY_H

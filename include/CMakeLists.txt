@@ -1,8 +1,8 @@
 set(Includes
         # Headers
         "CelestialBody.h"
-        "MilkyWay.h"
         "SolarSystem.h"
+        "Window.h"
         #".h"
 )
 
