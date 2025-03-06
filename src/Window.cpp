@@ -30,6 +30,7 @@ const float earthRadius = 0.6f;
 const float earthOrbitRadius = 8.0f;
 const float moonRadius = 0.16f;
 const float moonOrbitRadius = 1.5f;
+
 float rotationSpeed = 0.2f; // General system rotation speed
 float earthRotation = 0.0f; // Rotation of earth around itself (days) in degrees
 float earthOrbitRotation = 0.0f; // Rotation of earth around the Sun (years) in degrees
@@ -138,7 +139,7 @@ void Window::Update()
         rlPopMatrix();
 
     EndMode3D();
-
+  
   EndDrawing();
 }
 
