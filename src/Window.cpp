@@ -32,6 +32,7 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
     focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
 {
   InitWindow(1600, 1000, "Solar System");
+  LoadStars();
   InitCamera();
   SetTargetFPS(60);
 
@@ -41,6 +42,7 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
 
 Window::~Window()
 {
+  UnloadTexture(texture);
   CloseWindow();
 }
 
@@ -51,6 +53,20 @@ void Window::InitCamera()
   camera.up = Vector3{ 0.0f, 1.0f, 0.0f }; // Camera up vector (rotation towards target)
   camera.fovy = 45.0f; // Camera field-of-view Y
   camera.projection = CAMERA_PERSPECTIVE; // Camera projection type
+}
+
+void Window::LoadStars()
+{
+  // TODO: Link assets directory to CMake build directory for shorter paths :)
+  image = LoadImage("../assets/textures/Stars.jpg"); // Load image data into CPU memory (RAM)
+  texture = LoadTextureFromImage(image); // Image converted to texture, GPU memory (RAM -> VRAM)
+  UnloadImage(image);  // Unload image data from CPU memory (RAM)
+
+  image = LoadImageFromTexture(texture); // Load image from GPU texture (VRAM -> RAM)
+  UnloadTexture(texture); // Unload texture from GPU memory (VRAM)
+
+  texture = LoadTextureFromImage(image); // Recreate texture from retrieved image data (RAM -> VRAM)
+  UnloadImage(image); // Unload retrieved image data from CPU memory (RAM)
 }
 
 void Window::DrawSphereBasic(Color color)
@@ -102,6 +118,8 @@ void Window::Update()
   BeginDrawing();
 
     ClearBackground(BLACK);
+
+    DrawTexture(texture, 0, 0, WHITE);
 
     BeginMode3D(camera);
 

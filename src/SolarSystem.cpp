@@ -36,6 +36,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Sun
   (
     "Sun",
+    "Sun.jpg",
     1.989 * pow(10, 30),
     1.412 * pow(10, 18),
     1408,
@@ -53,6 +54,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Mercury
   (
     "Mercury",
+    "Mercury.jpg",
     0.3301 * pow(10, 24),
     6.083 * pow(10, 10),
     5429,
@@ -70,6 +72,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Venus
   (
     "Venus",
+    "Venus.jpg",
     4.8673 * pow(10, 24),
     92.843 * pow(10, 10),
     5243,
@@ -87,6 +90,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Earth
   (
     "Earth",
+    "Earth.jpg",
     5.9722 * pow(10, 24),
     108.321 * pow(10, 10),
     5513,
@@ -104,6 +108,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Mars
   (
     "Mars",
+    "Mars.jpg",
     6.4159 * pow(10, 23),
     16.312 * pow(10, 10),
     3934,
@@ -121,6 +126,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Jupiter
   (
     "Jupiter",
+    "Jupiter.jpg",
     1898.13 * pow(10, 24),
     143128 * pow(10, 10),
     1326,
@@ -140,6 +146,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Uranus
   (
     "Uranus",
+    "Uranus.jpg",
     8.6811 * pow(10, 24),
     6.833 * pow(10, 13),
     1270,
@@ -157,6 +164,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Neptune
   (
     "Neptune",
+    "Neptune.jpg",
     102.409 * pow(10, 24),
     6254 * pow(10, 10),
     1638,
@@ -174,6 +182,7 @@ std::vector<CelestialBody> getSolarSystem()
   CelestialBody Pluto
   (
     "Pluto",
+    "Pluto.jpg",
     0.01303 * pow(10, 24),
     0.702 * pow(10, 10),
     1854,
