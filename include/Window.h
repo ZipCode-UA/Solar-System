@@ -34,6 +34,8 @@ private:
 private:
   const float focalScale = 1;
   const float focalSize;
+  const float nearPlane = 1;
+  const float farPlane = 100000;
 };
 
 #endif // WINDOW_H
