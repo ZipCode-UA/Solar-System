@@ -62,8 +62,10 @@ void Window::InitCamera()
   camera.fovy = 45.0f;
   camera.projection = CAMERA_PERSPECTIVE;
 
-  // Extend the far clipping plane to ensure far objects are rendered.
-  Matrix proj = MatrixPerspective(camera.fovy * DEG2RAD, (float)GetScreenWidth() / (float)GetScreenHeight(), nearPlane, farPlane);
+  // Override the projection matrix with a custom far clipping plane to ensure far objects are rendered
+  proj = MatrixPerspective(camera.fovy * DEG2RAD,
+    (float)GetScreenWidth() / (float)GetScreenHeight(),
+    nearPlane, farPlane);
   SetMatrixProjection(proj);
 }
 
@@ -131,9 +133,6 @@ void Window::Update()
     BeginMode3D(camera);
 
       // Override the projection matrix with a custom far plane
-      Matrix proj = MatrixPerspective(camera.fovy * DEG2RAD,
-                                      (float)GetScreenWidth() / (float)GetScreenHeight(),
-                                      nearPlane, farPlane); // Adjust near and far values as needed
       rlSetMatrixProjection(proj);
 
       int i = 0;
@@ -154,7 +153,7 @@ void Window::Update()
         rlPopMatrix();
         ++i;
       }
-      
+
     EndMode3D();
   EndDrawing();
 }

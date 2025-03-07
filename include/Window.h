@@ -24,6 +24,7 @@ public:
 
 private:
   Camera camera = { 0 };
+  Matrix proj;
   Image image;
   Texture2D texture;
 
