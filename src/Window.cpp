@@ -24,6 +24,7 @@
 
 #include "raylib.h"
 #include "rlgl.h"
+#include "raymath.h"
 
 #include "CelestialBody.h"
 
@@ -46,13 +47,26 @@ Window::~Window()
   CloseWindow();
 }
 
+void SetMatrixProjection(const Matrix& proj) {
+  rlMatrixMode(RL_PROJECTION);
+  rlLoadIdentity();
+  rlMultMatrixf(MatrixToFloat(proj));
+  rlMatrixMode(RL_MODELVIEW);
+}
+
 void Window::InitCamera()
 {
-  camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
-  camera.target = Vector3{ 0.0f, 0.0f, 0.0f }; // Camera looking at point
-  camera.up = Vector3{ 0.0f, 1.0f, 0.0f }; // Camera up vector (rotation towards target)
-  camera.fovy = 45.0f; // Camera field-of-view Y
-  camera.projection = CAMERA_PERSPECTIVE; // Camera projection type
+  camera.position = Vector3{ focalSize, focalSize, focalSize };
+  camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
+  camera.up = Vector3{ 0.0f, 1.0f, 0.0f };
+  camera.fovy = 45.0f;
+  camera.projection = CAMERA_PERSPECTIVE;
+
+  // Extend the far clipping plane to ensure far objects are rendered.
+  float nearPlane = 0.1f;
+  float farPlane = 2000.0f; 
+  Matrix proj = MatrixPerspective(camera.fovy * DEG2RAD, (float)GetScreenWidth() / (float)GetScreenHeight(), nearPlane, farPlane);
+  SetMatrixProjection(proj);
 }
 
 void Window::LoadStars()
@@ -112,16 +126,18 @@ void Window::DrawSphereBasic(Color color)
 void Window::Update()
 {
   UpdateCamera(&camera, CAMERA_ORBITAL);
-  
-  // TODO: Create parallel vector of rotation data and calculate rotation
 
   BeginDrawing();
-
     ClearBackground(BLACK);
-
     DrawTexture(texture, 0, 0, WHITE);
 
     BeginMode3D(camera);
+
+      // Override the projection matrix with a custom far plane
+      Matrix proj = MatrixPerspective(camera.fovy * DEG2RAD,
+                                      (float)GetScreenWidth() / (float)GetScreenHeight(),
+                                      0.1f, 2000.0f); // Adjust near and far values as needed
+      rlSetMatrixProjection(proj);
 
       int i = 0;
       for (const auto iter : SolarSystem)
@@ -130,25 +146,21 @@ void Window::Update()
         const float scaledRadius = static_cast<float>(iter.getRadius());
 
         rlPushMatrix();
-
-          rlRotatef(0.0f, 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit
-          rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f); // Translation of CelestialBody orbit
+          rlRotatef(0.0f, 0.0f, 1.0f, 0.0f);
+          rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f);
 
           rlPushMatrix();
-            // TODO: Create parallel vector of rotation data and calculate rotation
-            rlRotatef(rotation[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody
-            rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
-            DrawSphereBasic(GOLD); // Color CelestialBody
+            rlRotatef(rotation[i], 0.25f, 1.0f, 0.0f);
+            rlScalef(scaledRadius, scaledRadius, scaledRadius);
+            DrawSphereBasic(GOLD);
           rlPopMatrix();
-
         rlPopMatrix();
         ++i;
       }
-
     EndMode3D();
-
   EndDrawing();
 }
+
 
 bool Window::Open()
 {
