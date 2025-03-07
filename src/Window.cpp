@@ -154,6 +154,7 @@ void Window::Update()
         rlPopMatrix();
         ++i;
       }
+      
     EndMode3D();
   EndDrawing();
 }
