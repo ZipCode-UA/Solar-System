@@ -33,7 +33,7 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
     focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
 {
   InitWindow(1600, 1000, "Solar System");
-  LoadStars();
+  LoadBackground();
   InitCamera();
   SetTargetFPS(60);
 
@@ -43,11 +43,12 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
 
 Window::~Window()
 {
-  UnloadTexture(texture);
+  UnloadTexture(background);
   CloseWindow();
 }
 
-void SetMatrixProjection(const Matrix& proj) {
+void Window::SetMatrixProjection()
+{
   rlMatrixMode(RL_PROJECTION);
   rlLoadIdentity();
   rlMultMatrixf(MatrixToFloat(proj));
@@ -56,34 +57,31 @@ void SetMatrixProjection(const Matrix& proj) {
 
 void Window::InitCamera()
 {
-  camera.position = Vector3{ focalSize, focalSize, focalSize };
-  camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
-  camera.up = Vector3{ 0.0f, 1.0f, 0.0f };
-  camera.fovy = 45.0f;
-  camera.projection = CAMERA_PERSPECTIVE;
+  camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
+  camera.target = Vector3{ 0.0f, 0.0f, 0.0f }; // Camera looking at point
+  camera.up = Vector3{ 0.0f, 1.0f, 0.0f }; // Camera up vector (rotation towards target)
+  camera.fovy = 45.0f; // Camera field-of-view Y
+  camera.projection = CAMERA_PERSPECTIVE; // Camera projection type
 
   // Override the projection matrix with a custom far clipping plane to ensure far objects are rendered
   proj = MatrixPerspective(camera.fovy * DEG2RAD,
     (float)GetScreenWidth() / (float)GetScreenHeight(),
     nearPlane, farPlane);
-  SetMatrixProjection(proj);
+  SetMatrixProjection();
 }
 
-void Window::LoadStars()
+void Window::LoadBackground()
 {
   // TODO: Link assets directory to CMake build directory for shorter paths :)
-  image = LoadImage("../assets/textures/Stars.jpg"); // Load image data into CPU memory (RAM)
-  texture = LoadTextureFromImage(image); // Image converted to texture, GPU memory (RAM -> VRAM)
-  UnloadImage(image);  // Unload image data from CPU memory (RAM)
-
-  image = LoadImageFromTexture(texture); // Load image from GPU texture (VRAM -> RAM)
-  UnloadTexture(texture); // Unload texture from GPU memory (VRAM)
-
-  texture = LoadTextureFromImage(image); // Recreate texture from retrieved image data (RAM -> VRAM)
-  UnloadImage(image); // Unload retrieved image data from CPU memory (RAM)
+  background = LoadTexture("../assets/textures/Stars.jpg"); // Load image data into GPU memory (VRAM)
 }
 
-void Window::DrawSphereBasic(Color color)
+void Window::DrawBackground()
+{
+  DrawTexture(background, 0, 0, WHITE);
+}
+
+void Window::DrawCelestialBody(Color color)
 {
   int rings = 16;
   int slices = 16;
@@ -123,43 +121,45 @@ void Window::DrawSphereBasic(Color color)
   rlEnd();
 }
 
-void Window::Update()
+void Window::DrawCelestialBodies()
 {
-  UpdateCamera(&camera, CAMERA_ORBITAL);
+  int i = 0;
+  for (const auto iter : SolarSystem)
+  {
+    const float scaledOrbitRadius = static_cast<float>(iter.getOrbitRadius());
+    const float scaledRadius = static_cast<float>(iter.getRadius());
 
-  BeginDrawing();
-    ClearBackground(BLACK);
-    DrawTexture(texture, 0, 0, WHITE);
-    BeginMode3D(camera);
+    rlPushMatrix();
+      rlRotatef(0.0f, 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit
+      rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f); // Translation of CelestialBody orbit
 
-      // Override the projection matrix with a custom far plane
-      rlSetMatrixProjection(proj);
-
-      int i = 0;
-      for (const auto iter : SolarSystem)
-      {
-        const float scaledOrbitRadius = static_cast<float>(iter.getOrbitRadius());
-        const float scaledRadius = static_cast<float>(iter.getRadius());
-
-        rlPushMatrix();
-          rlRotatef(0.0f, 0.0f, 1.0f, 0.0f);
-          rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f);
-
-          rlPushMatrix();
-            rlRotatef(rotation[i], 0.25f, 1.0f, 0.0f);
-            rlScalef(scaledRadius, scaledRadius, scaledRadius);
-            DrawSphereBasic(GOLD);
-          rlPopMatrix();
-        rlPopMatrix();
-        ++i;
-      }
-
-    EndMode3D();
-  EndDrawing();
+      rlPushMatrix();
+        rlRotatef(rotation[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody
+        rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
+        DrawCelestialBody(GOLD); // Color CelestialBody
+      rlPopMatrix();
+    rlPopMatrix();
+    ++i;
+  }
 }
-
 
 bool Window::Open()
 {
   return !WindowShouldClose();
+}
+
+void Window::Update()
+{
+  UpdateCamera(&camera, CAMERA_ORBITAL);
+
+  // TODO: Create parallel vector of rotation data and calculate rotation
+
+  BeginDrawing();
+    ClearBackground(BLACK);
+    DrawBackground();
+    BeginMode3D(camera);
+      rlSetMatrixProjection(proj); // Override the projection matrix with a custom far plane
+      DrawCelestialBodies();
+    EndMode3D();
+  EndDrawing();
 }

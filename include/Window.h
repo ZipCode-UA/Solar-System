@@ -14,9 +14,12 @@ public:
   ~Window();
 
 private:
+  void SetMatrixProjection();
   void InitCamera();
-  void LoadStars();
-  void DrawSphereBasic(Color color); // Draw sphere without any matrix transformation
+  void LoadBackground();
+  void DrawBackground();
+  void DrawCelestialBody(Color color); // Draw sphere without any matrix transformation
+  void DrawCelestialBodies();
 
 public:
   bool Open();
@@ -25,18 +28,17 @@ public:
 private:
   Camera camera = { 0 };
   Matrix proj;
-  Image image;
-  Texture2D texture;
+  Texture2D background;
 
 private:
   const std::vector<CelestialBody>& SolarSystem;
   std::vector<float> rotation;
 
 private:
-  const float focalScale = 1;
+  const float nearPlane = 1.0f;
+  const float farPlane = 100000.0f;
+  const float focalScale = 1.0f;
   const float focalSize;
-  const float nearPlane = 1;
-  const float farPlane = 100000;
 };
 
 #endif // WINDOW_H
