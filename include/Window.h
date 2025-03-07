@@ -2,7 +2,6 @@
 #define WINDOW_H
 
 #include <vector>
-#include <cmath>
 
 #include "raylib.h"
 
