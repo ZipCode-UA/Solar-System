@@ -21,10 +21,10 @@ namespace Celestial
   static double smallestOrbitRadius;
   static double greatestRadius;
   static double greatestOrbitRadius;
-  static double scaleTargetMinRadiusSize = 1;
-  static double scaleTargetMaxRadiusSize = 1000;
-  static double scaleTargetMinOrbitRadiusSize = scaleTargetMinRadiusSize + scaleTargetMaxRadiusSize;
-  static double scaleTargetMaxOrbitRadiusSize = scaleTargetMaxRadiusSize * 20;
+  static double scaleTargetMinRadiusSize;
+  static double scaleTargetMaxRadiusSize;
+  static double scaleTargetMinOrbitRadiusSize;
+  static double scaleTargetMaxOrbitRadiusSize;
 }
 
 class CelestialBody
