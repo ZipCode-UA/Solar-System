@@ -56,7 +56,7 @@ void SetMatrixProjection(const Matrix& proj) {
 
 void Window::InitCamera()
 {
-  camera.position = Vector3{ focalSize, focalSize, focalSize };
+  camera.position = Vector3{ focalSize * 1.3f, focalSize * 1.3f, focalSize * 1.3f};
   camera.target = Vector3{ 0.0f, 0.0f, 0.0f };
   camera.up = Vector3{ 0.0f, 1.0f, 0.0f };
   camera.fovy = 45.0f;
