@@ -10,9 +10,11 @@ int main()
   Celestial::sort(SolarSystem);
   Celestial::setBounds(SolarSystem);
 
+  float elapsedTime = 0.0f;
+
   Window window(SolarSystem);
   while(window.Open())
   {
-    window.Update();
+    window.Update(elapsedTime);
   }
 }

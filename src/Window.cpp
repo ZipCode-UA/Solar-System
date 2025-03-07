@@ -148,8 +148,10 @@ bool Window::Open()
   return !WindowShouldClose();
 }
 
-void Window::Update()
+void Window::Update(float& elapsedTime)
 {
+  elapsedTime += GetFrameTime();
+
   UpdateCamera(&camera, CAMERA_ORBITAL);
 
   // TODO: Create parallel vector of rotation data and calculate rotation

@@ -23,7 +23,7 @@ private:
 
 public:
   bool Open();
-  void Update();
+  void Update(float& elapsedTime);
 
 private:
   Camera camera = { 0 };
