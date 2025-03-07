@@ -2,6 +2,7 @@
 #define WINDOW_H
 
 #include <vector>
+#include <cmath>
 
 #include "raylib.h"
 
@@ -30,6 +31,7 @@ private:
 private:
   const std::vector<CelestialBody>& SolarSystem;
   std::vector<float> rotation;
+  float modelScale;
 
 private:
   const float focalScale = 1;
