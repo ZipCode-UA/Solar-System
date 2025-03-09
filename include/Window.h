@@ -30,6 +30,7 @@ private:
 private:
   const std::vector<CelestialBody>& SolarSystem;
   std::vector<float> rotation;
+  float modelScale;
 
 private:
   const float focalScale = 1;
