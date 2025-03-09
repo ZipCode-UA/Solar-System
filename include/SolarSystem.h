@@ -1,9 +1,10 @@
 #ifndef SOLARSYSTEM_H
 #define SOLARSYSTEM_H
 
+#include <vector>
+
 #include "CelestialBody.h"
 
-double getDistance(const CelestialBody &a, const CelestialBody &b);
-double getAttractionForce(const CelestialBody &a, const CelestialBody &b);
+std::vector<CelestialBody> getSolarSystem();
 
 #endif // SOLARSYSTEM_H

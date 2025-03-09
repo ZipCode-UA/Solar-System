@@ -10,8 +10,9 @@ Solar-Sytem is a GitHub collaboration demo
 - Create a new branch for your revision
   - Target only 1 TODO per branch
 - Prefer small, focused commits
-- Submit a pull request when finished
-- Move the task to `Review`
+- Pull any updates from the `main` branch
+- Submit a pull request when task is completee
+- Move the task to the `Review` column within the `Project` and assign a reviewer
 - Pull request will be reviewed and merged into the main branch via a squash
 
 ## Building

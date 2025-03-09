@@ -1,7 +1,9 @@
 set(Sources
         # Sources
-        "MilkyWay.cpp"
+        "CelestialBody.cpp"
+        "main.cpp"
         "SolarSystem.cpp"
+        "Window.cpp"
         #".cpp"
 )
 
