@@ -141,7 +141,23 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Jupiter);
 
-  // TODO - Add Saturn... Pls put it in sci notation like above
+  CelestialBody Saturn
+  {
+    "Saturn",
+    "Saturn.jpg",
+    5.6832      * pow(10, 26),
+    8.2713      * pow(10, 14),
+    687,
+    11.19,
+    5.8232      * pow(10,4),
+    9.67,
+    1.357554    * pow(10, 9),
+    1.506527    * pow(10, 9),
+    1.075699    * pow(10, 4),
+    146,
+    true
+  };
+  SolarSystem.push_back(Saturn);
 
   CelestialBody Uranus
   (
