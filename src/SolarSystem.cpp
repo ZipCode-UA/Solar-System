@@ -37,11 +37,11 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Sun",
     "Sun.jpg",
-    1.989 * pow(10, 30),
-    1.412 * pow(10, 18),
+    1.989       * pow(10, 30),
+    1.412       * pow(10, 18),
     1408,
     274,
-    6.957 * pow(10, 5),
+    6.957       * pow(10, 5),
     0,
     0,
     0,
@@ -55,15 +55,15 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Mercury",
     "Mercury.jpg",
-    0.3301 * pow(10, 24),
-    6.083 * pow(10, 10),
-    5429,
+    0.3301      * pow(10, 24),
+    6.083       * pow(10, 10),
+    5.429       * pow(10, 3),
     3.70,
-    2439.7,
-    47.36,
-    46.000 * pow(10, 6),
-    69.818 * pow(10, 6),
-    87.969,
+    2.4397      * pow(10, 3),
+    4.736       * pow(10, 1),
+    4.6000      * pow(10, 7),
+    6.9818      * pow(10, 7),
+    8.7969      * pow(10, 1),
     0,
     false
   );
@@ -73,15 +73,15 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Venus",
     "Venus.jpg",
-    4.8673 * pow(10, 24),
-    92.843 * pow(10, 10),
-    5243,
+    4.8673        * pow(10, 24),
+    9.2843        * pow(10, 11),
+    5.243         * pow(10, 3),
     8.87,
-    6051.8,
-    35.02,
-    107.480 * pow(10, 6),
-    108.941 * pow(10, 6),
-    224.701,
+    6.0518        * pow(10, 3),
+    3.502 * 10,
+    1.07480       * pow(10, 8),
+    1.08941       * pow(10, 8),
+    2.24701       * pow(10, 2),
     0,
     false
   );
@@ -91,33 +91,33 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Earth",
     "Earth.jpg",
-    5.9722 * pow(10, 24),
-    108.321 * pow(10, 10),
-    5513,
+    5.9722      * pow(10, 24),
+    1.08321     * pow(10, 12),
+    5.513       * pow(10, 3),
     9.82,
-    6371,
-    29.78,
-    147.095 * pow(10, 6),
-    152.100 * pow(10, 6),
-    365.256,
+    6.371       * pow(10, 3),
+    2.978       * pow(10, 1),
+    1.47095     * pow(10, 8),
+    1.52100     * pow(10, 8),
+    3.65256     * pow(10, 2),
     1,
     false
   );
   SolarSystem.push_back(Earth);
-  
+
   CelestialBody Mars
   (
     "Mars",
     "Mars.jpg",
-    6.4159 * pow(10, 23),
-    16.312 * pow(10, 10),
-    3934,
+    6.4159      * pow(10, 23),
+    1.6312      * pow(10, 11),
+    3.934       * pow(10, 3),
     3.73,
-    3389.5,
-    24.08,
-    206.650 * pow(10, 6),
-    249.261 * pow(10, 6),
-    686.980,
+    3.3895      * pow(10, 3),
+    2.408       * pow(10, 1),
+    2.06650     * pow(10, 8),
+    2.49261     * pow(10, 8),
+    6.86980     * pow(10, 2),
     2,
     false
   );
@@ -127,36 +127,52 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Jupiter",
     "Jupiter.jpg",
-    1898.13 * pow(10, 24),
-    143128 * pow(10, 10),
-    1326,
-    25.92,
-    69911,
-    13.06,
-    740.595 * pow(10, 6),
-    816.363 * pow(10, 6),
-    4332.59,
-    95,
+    1.89813     * pow(10, 27),
+    1.43128     * pow(10, 15),
+    1.326       * pow(10, 3),
+    2.592       * pow(10, 1),
+    6.9911      * pow(10, 4),
+    1.306       * pow(10, 1),
+    7.40595     * pow(10, 8),
+    8.16363     * pow(10, 8),
+    4.33259     * pow(10, 3),
+    9.5         * pow(10, 1),
     true
   );
   SolarSystem.push_back(Jupiter);
 
-  // TODO - Add Saturn
+  CelestialBody Saturn
+  {
+    "Saturn",
+    "Saturn.jpg",
+    5.6832      * pow(10, 26),
+    8.2713      * pow(10, 14),
+    687,
+    11.19,
+    5.8232      * pow(10,4),
+    9.67,
+    1.357554    * pow(10, 9),
+    1.506527    * pow(10, 9),
+    1.075699    * pow(10, 4),
+    146,
+    true
+  };
+  SolarSystem.push_back(Saturn);
 
   CelestialBody Uranus
   (
     "Uranus",
     "Uranus.jpg",
-    8.6811 * pow(10, 24),
-    6.833 * pow(10, 13),
-    1270,
+    8.6811      * pow(10, 24),
+    6.833       * pow(10, 13),
+    1.270       * pow(10, 3),
     9.01,
-    25362,
+    2.5362      * pow(10, 4),
     6.79,
-    2732.696 * pow(10, 6),
-    3001.39 * pow(10, 6),
-    30685.4,
-    28,
+    2.732696    * pow(10, 9),
+    3.00139     * pow(10, 9),
+    3.06854     * pow(10, 4),
+    2.8         * pow(10, 1),
     true
   );
   SolarSystem.push_back(Uranus);
@@ -165,16 +181,16 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Neptune",
     "Neptune.jpg",
-    102.409 * pow(10, 24),
-    6254 * pow(10, 10),
-    1638,
-    11.27,
-    24622,
+    1.02409     * pow(10, 26),
+    6.254       * pow(10, 13),
+    1.638       * pow(10, 3),
+    1.127       * pow(10, 1),
+    2.4622      * pow(10, 4),
     5.45,
-    4471.050 * pow(10, 6),
-    4558.857 * pow(10, 6),
-    60189.018,
-    16,
+    4.471050    * pow(10, 9),
+    4.558857    * pow(10, 9),
+    6.0189018   * pow(10, 4),
+    1.6         * pow(10, 1),
     true
   );
   SolarSystem.push_back(Neptune);
@@ -183,21 +199,21 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Pluto",
     "Pluto.jpg",
-    0.01303 * pow(10, 24),
-    0.702 * pow(10, 10),
-    1854,
-    .62,
-    1188,
+    1.303     * pow(10, 22),
+    7.02      * pow(10, 9),
+    1.854     * pow(10, 3),
+    6.2       * pow(10, -1),
+    1.188     * pow(10, 3),
     4.64,
-    4434.987 * pow(10, 6),
-    7304.326 * pow(10, 6),
-    90560,
+    4.434987  * pow(10, 9),
+    7.304326  * pow(10, 9),
+    9.05609   * pow(10, 5),
     5,
     false
   );
   SolarSystem.push_back(Pluto);
 
-  // TODO - Add Chiron :)
+  // TODO - Add Chiron :) ...Pls put it in sci notation like above
 
   return SolarSystem;
 }
