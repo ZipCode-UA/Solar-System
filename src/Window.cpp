@@ -29,7 +29,8 @@
 
 Window::Window(const std::vector<CelestialBody>& SolarSystem)
   : SolarSystem(SolarSystem),
-    focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
+    modelScale(100/SolarSystem.crbegin()->getRadius()),
+    focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale / modelScale))
 {
   InitWindow(1600, 1000, "Solar System");
   LoadStars();
@@ -126,8 +127,8 @@ void Window::Update()
       int i = 0;
       for (const auto iter : SolarSystem)
       {
-        const float scaledOrbitRadius = static_cast<float>(iter.getOrbitRadius());
-        const float scaledRadius = static_cast<float>(iter.getRadius());
+        const float scaledOrbitRadius = static_cast<float>(iter.getOrbitRadius()) / modelScale;
+        const float scaledRadius = static_cast<float>(iter.getRadius()) / modelScale;
 
         rlPushMatrix();
 
