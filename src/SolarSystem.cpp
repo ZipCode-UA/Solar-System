@@ -213,7 +213,5 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Pluto);
 
-  // TODO - Add Chiron :) ...Pls put it in sci notation like above
-
   return SolarSystem;
 }
