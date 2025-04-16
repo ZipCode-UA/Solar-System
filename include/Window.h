@@ -18,7 +18,6 @@ private:
   void InitCamera();
   void LoadBackground();
   void DrawBackground();
-  void DrawCelestialBody(Color color); // Draw sphere without any matrix transformation
   void DrawCelestialBodies();
 
 public:
@@ -29,6 +28,7 @@ private:
   Camera camera = { 0 };
   Matrix proj;
   Texture2D background;
+  Texture2D sun;
 
 private:
   const std::vector<CelestialBody>& SolarSystem;
