@@ -61,7 +61,7 @@ public:
   double getAphelion() const { return this->aphelion; }
   double getOrbit() const { return this->orbit; }
   double getOrbitRadius() const { return logScale(this->orbitRadius, "orbitRadius"); }
-  double getRotation() const { return this->rotation; }
+  double getAxisRotation() const { return this->rotation; }
   int getSatellites() const { return this->satellites; }
   bool getRing() const { return this->ring; }
 
