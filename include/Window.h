@@ -16,7 +16,7 @@ public:
 private:
   void SetMatrixProjection();
   void InitCamera();
-  void LoadBackground();
+  void LoadTextures();
   void DrawBackground();
   void DrawCelestialBodies();
 
@@ -32,6 +32,7 @@ private:
 private:
   const std::vector<CelestialBody>& SolarSystem;
   std::vector<float> rotation;
+  std::vector<Texture2D> textures;
 
 private:
   const float nearPlane = 1.0f;

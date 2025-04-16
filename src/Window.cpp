@@ -36,7 +36,7 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
   ToggleBorderlessWindowed();
   InitCamera();
   SetTargetFPS(60);
-  LoadBackground();
+  LoadTextures();
 
   for (const auto iter : SolarSystem)
     rotation.push_back(0);
@@ -45,6 +45,10 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
 Window::~Window()
 {
   UnloadTexture(background);
+  
+  for (const auto iter : textures)
+    UnloadTexture(iter);
+
   CloseWindow();
 }
 
@@ -71,10 +75,19 @@ void Window::InitCamera()
   //SetMatrixProjection();
 }
 
-void Window::LoadBackground()
+void Window::LoadTextures()
 {
   // TODO: Link assets directory to CMake build directory for shorter paths :)
   background = LoadTexture("../assets/textures/Stars.jpg"); // Load image data into GPU memory (VRAM)
+
+  for (const auto iter : SolarSystem)
+  {
+    std::string path = "../assets/textures/";
+    path += iter.getName();
+    path += ".jpg";
+    Texture2D texture = LoadTexture(path.c_str());
+    textures.push_back(texture);
+  }
 }
 
 void Window::DrawBackground()
