@@ -10,7 +10,7 @@ namespace Celestial
   {
 
   }
-  
+
   void setBounds(const std::vector<CelestialBody>& SolarSystem)
   {
     setSmallestRadius(SolarSystem);
