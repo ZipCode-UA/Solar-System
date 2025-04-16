@@ -136,6 +136,7 @@ void Window::Update(float& elapsedTime)
 
   UpdateCamera(&camera, CAMERA_ORBITAL);
 
+  /*
   // Update rotation vectors
   int i = 0;
   const double secondsInDay = 86400;
@@ -148,6 +149,16 @@ void Window::Update(float& elapsedTime)
     const double daysPerOneAxisDegree = iter.getAxisRotation() / 360.0f;
     axisRotationAngles[i] = daysElapsed / daysPerOneAxisDegree;
 
+    ++i;
+  }
+  */
+
+  // Update rotation vectors
+  int i = 0;
+  for (const auto iter : SolarSystem)
+  {
+    orbitRotationAngles[i] = (iter.getOrbit() / 360.0f) * timeScale;
+    axisRotationAngles[i] = (iter.getAxisRotation() / 360.0f) * timeScale;
     ++i;
   }
 
