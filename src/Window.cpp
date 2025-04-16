@@ -19,7 +19,6 @@
 
 #include "Window.h"
 
-#include <cmath>
 #include <vector>
 
 #include "raylib.h"
@@ -37,9 +36,13 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
   InitCamera();
   SetTargetFPS(60);
   LoadTextures();
+  LoadModels();
 
   for (const auto iter : SolarSystem)
-    rotation.push_back(0);
+  {
+    orbitRotationAngles.push_back(0);
+    axisRotationAngles.push_back(0);
+  }
 }
 
 Window::~Window()
@@ -49,15 +52,10 @@ Window::~Window()
   for (const auto iter : textures)
     UnloadTexture(iter);
 
-  CloseWindow();
-}
+  for (const auto iter : models)
+    UnloadModel(iter);
 
-void Window::SetMatrixProjection()
-{
-  rlMatrixMode(RL_PROJECTION);
-  rlLoadIdentity();
-  rlMultMatrixf(MatrixToFloat(proj));
-  rlMatrixMode(RL_MODELVIEW);
+  CloseWindow();
 }
 
 void Window::InitCamera()
@@ -72,7 +70,6 @@ void Window::InitCamera()
   proj = MatrixPerspective(camera.fovy * DEG2RAD,
     (float)GetScreenWidth() / (float)GetScreenHeight(),
     nearPlane, farPlane);
-  //SetMatrixProjection();
 }
 
 void Window::LoadTextures()
@@ -83,10 +80,22 @@ void Window::LoadTextures()
   for (const auto iter : SolarSystem)
   {
     std::string path = "../assets/textures/";
-    path += iter.getName();
-    path += ".jpg";
+    std::string name = iter.getFileName();
+    path += name;
     Texture2D texture = LoadTexture(path.c_str());
     textures.push_back(texture);
+  }
+}
+
+void Window::LoadModels()
+{
+  int i = 0;
+  for (const auto iter : SolarSystem)
+  {
+    Mesh mesh = GenMeshSphere(1.0f, 32, 32);
+    Model model = LoadModelFromMesh(mesh);
+    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = textures[i++];
+    models.push_back(model);
   }
 }
 
@@ -104,12 +113,12 @@ void Window::DrawCelestialBodies()
     const float scaledRadius = static_cast<float>(iter.getRadius());
 
     rlPushMatrix();
-      rlRotatef(0.0f, 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit
+      rlRotatef(orbitRotationAngles[i], 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit around the Sun
       rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f); // Translation of CelestialBody orbit
       rlPushMatrix();
-        rlRotatef(rotation[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody
+        rlRotatef(axisRotationAngles[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody itself
         rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
-        DrawSphere((Vector3){ 0.0f, 0.0f, 0.0f }, 1.0f, YELLOW); // Draw a sphere
+        DrawModel(models[i], (Vector3){ 0.0f, 0.0f, 0.0f }, 1.0f, WHITE); // Draw the CelestialBody
       rlPopMatrix();
     rlPopMatrix();
     ++i;
@@ -127,7 +136,20 @@ void Window::Update(float& elapsedTime)
 
   UpdateCamera(&camera, CAMERA_ORBITAL);
 
-  // TODO: Create parallel vector of rotation data and calculate rotation
+  // Update rotation vectors
+  int i = 0;
+  const double secondsInDay = 86400;
+  const double daysElapsed = (elapsedTime * timeScale) / secondsInDay;
+  for (const auto iter : SolarSystem)
+  {
+    const double daysPerOneOrbitDegree = iter.getOrbit() / 360.0f;
+    orbitRotationAngles[i] = daysElapsed / daysPerOneOrbitDegree;
+
+    const double daysPerOneAxisDegree = iter.getAxisRotation() / 360.0f;
+    axisRotationAngles[i] = daysElapsed / daysPerOneAxisDegree;
+
+    ++i;
+  }
 
   BeginDrawing();
     ClearBackground(BLACK);

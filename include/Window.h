@@ -17,6 +17,7 @@ private:
   void SetMatrixProjection();
   void InitCamera();
   void LoadTextures();
+  void LoadModels();
   void DrawBackground();
   void DrawCelestialBodies();
 
@@ -31,14 +32,17 @@ private:
 
 private:
   const std::vector<CelestialBody>& SolarSystem;
-  std::vector<float> rotation;
+  std::vector<double> orbitRotationAngles;
+  std::vector<double> axisRotationAngles;
   std::vector<Texture2D> textures;
+  std::vector<Model> models;
 
 private:
   const float nearPlane = 1.0f;
   const float farPlane = 100000.0f;
   const float focalScale = 1.0f;
   const float focalSize;
+  const float timeScale = 1.0f;
 };
 
 #endif // WINDOW_H
