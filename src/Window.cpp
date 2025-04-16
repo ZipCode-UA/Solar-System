@@ -33,7 +33,7 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
     focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
 {
   InitWindow(1600, 1000, "Solar System");
-  LoadBackground();
+  ToggleBorderlessWindowed();
   InitCamera();
   SetTargetFPS(60);
 
@@ -67,58 +67,19 @@ void Window::InitCamera()
   proj = MatrixPerspective(camera.fovy * DEG2RAD,
     (float)GetScreenWidth() / (float)GetScreenHeight(),
     nearPlane, farPlane);
-  SetMatrixProjection();
+  //SetMatrixProjection();
 }
 
 void Window::LoadBackground()
 {
   // TODO: Link assets directory to CMake build directory for shorter paths :)
   background = LoadTexture("../assets/textures/Stars.jpg"); // Load image data into GPU memory (VRAM)
+  sun = LoadTexture("../assets/textures/Sun.jpg"); // Load image data into GPU memory (VRAM)
 }
 
 void Window::DrawBackground()
 {
   DrawTexture(background, 0, 0, WHITE);
-}
-
-void Window::DrawCelestialBody(Color color)
-{
-  int rings = 16;
-  int slices = 16;
-
-  // Make sure there is enough space in the internal render batch
-  // buffer to store all required vertex, batch is reseted if required
-  rlCheckRenderBatchLimit((rings + 2)*slices*6);
-
-  rlBegin(RL_TRIANGLES);
-      rlColor4ub(color.r, color.g, color.b, color.a);
-
-      for (int i = 0; i < (rings + 2); i++)
-      {
-          for (int j = 0; j < slices; j++)
-          {
-              rlVertex3f(cosf(DEG2RAD*(270+(180/(rings + 1))*i))*sinf(DEG2RAD*(j*360/slices)),
-                         sinf(DEG2RAD*(270+(180/(rings + 1))*i)),
-                         cosf(DEG2RAD*(270+(180/(rings + 1))*i))*cosf(DEG2RAD*(j*360/slices)));
-              rlVertex3f(cosf(DEG2RAD*(270+(180/(rings + 1))*(i+1)))*sinf(DEG2RAD*((j+1)*360/slices)),
-                         sinf(DEG2RAD*(270+(180/(rings + 1))*(i+1))),
-                         cosf(DEG2RAD*(270+(180/(rings + 1))*(i+1)))*cosf(DEG2RAD*((j+1)*360/slices)));
-              rlVertex3f(cosf(DEG2RAD*(270+(180/(rings + 1))*(i+1)))*sinf(DEG2RAD*(j*360/slices)),
-                         sinf(DEG2RAD*(270+(180/(rings + 1))*(i+1))),
-                         cosf(DEG2RAD*(270+(180/(rings + 1))*(i+1)))*cosf(DEG2RAD*(j*360/slices)));
-
-              rlVertex3f(cosf(DEG2RAD*(270+(180/(rings + 1))*i))*sinf(DEG2RAD*(j*360/slices)),
-                         sinf(DEG2RAD*(270+(180/(rings + 1))*i)),
-                         cosf(DEG2RAD*(270+(180/(rings + 1))*i))*cosf(DEG2RAD*(j*360/slices)));
-              rlVertex3f(cosf(DEG2RAD*(270+(180/(rings + 1))*(i)))*sinf(DEG2RAD*((j+1)*360/slices)),
-                         sinf(DEG2RAD*(270+(180/(rings + 1))*(i))),
-                         cosf(DEG2RAD*(270+(180/(rings + 1))*(i)))*cosf(DEG2RAD*((j+1)*360/slices)));
-              rlVertex3f(cosf(DEG2RAD*(270+(180/(rings + 1))*(i+1)))*sinf(DEG2RAD*((j+1)*360/slices)),
-                         sinf(DEG2RAD*(270+(180/(rings + 1))*(i+1))),
-                         cosf(DEG2RAD*(270+(180/(rings + 1))*(i+1)))*cosf(DEG2RAD*((j+1)*360/slices)));
-          }
-      }
-  rlEnd();
 }
 
 void Window::DrawCelestialBodies()
@@ -132,11 +93,10 @@ void Window::DrawCelestialBodies()
     rlPushMatrix();
       rlRotatef(0.0f, 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit
       rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f); // Translation of CelestialBody orbit
-
       rlPushMatrix();
         rlRotatef(rotation[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody
         rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
-        DrawCelestialBody(GOLD); // Color CelestialBody
+        DrawSphere((Vector3){ 0.0f, 0.0f, 0.0f }, 1.0f, YELLOW); // Draw a sphere
       rlPopMatrix();
     rlPopMatrix();
     ++i;
