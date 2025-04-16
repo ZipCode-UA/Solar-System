@@ -28,7 +28,6 @@ private:
   Camera camera = { 0 };
   Matrix proj;
   Texture2D background;
-  Texture2D sun;
 
 private:
   const std::vector<CelestialBody>& SolarSystem;
