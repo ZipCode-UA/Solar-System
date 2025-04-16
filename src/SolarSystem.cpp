@@ -47,6 +47,7 @@ std::vector<CelestialBody> getSolarSystem()
     0,
     0,
     0,
+    0,
     false
   );
   SolarSystem.push_back(Sun);
@@ -64,6 +65,7 @@ std::vector<CelestialBody> getSolarSystem()
     4.6000      * pow(10, 7),
     6.9818      * pow(10, 7),
     8.7969      * pow(10, 1),
+    4222.6,
     0,
     false
   );
@@ -82,6 +84,7 @@ std::vector<CelestialBody> getSolarSystem()
     1.07480       * pow(10, 8),
     1.08941       * pow(10, 8),
     2.24701       * pow(10, 2),
+    2802,
     0,
     false
   );
@@ -100,6 +103,7 @@ std::vector<CelestialBody> getSolarSystem()
     1.47095     * pow(10, 8),
     1.52100     * pow(10, 8),
     3.65256     * pow(10, 2),
+    24,
     1,
     false
   );
@@ -118,6 +122,7 @@ std::vector<CelestialBody> getSolarSystem()
     2.06650     * pow(10, 8),
     2.49261     * pow(10, 8),
     6.86980     * pow(10, 2),
+    24.6597,
     2,
     false
   );
@@ -136,6 +141,7 @@ std::vector<CelestialBody> getSolarSystem()
     7.40595     * pow(10, 8),
     8.16363     * pow(10, 8),
     4.33259     * pow(10, 3),
+    9.9259,
     9.5         * pow(10, 1),
     true
   );
@@ -154,6 +160,7 @@ std::vector<CelestialBody> getSolarSystem()
     1.357554    * pow(10, 9),
     1.506527    * pow(10, 9),
     1.075699    * pow(10, 4),
+    10.656,
     146,
     true
   };
@@ -172,6 +179,7 @@ std::vector<CelestialBody> getSolarSystem()
     2.732696    * pow(10, 9),
     3.00139     * pow(10, 9),
     3.06854     * pow(10, 4),
+    17.24,
     2.8         * pow(10, 1),
     true
   );
@@ -190,6 +198,7 @@ std::vector<CelestialBody> getSolarSystem()
     4.471050    * pow(10, 9),
     4.558857    * pow(10, 9),
     6.0189018   * pow(10, 4),
+    16.11,
     1.6         * pow(10, 1),
     true
   );
@@ -208,6 +217,7 @@ std::vector<CelestialBody> getSolarSystem()
     4.434987  * pow(10, 9),
     7.304326  * pow(10, 9),
     9.05609   * pow(10, 5),
+    153.2820,
     5,
     false
   );

@@ -37,7 +37,7 @@ private:
   friend void Celestial::setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
 
 public:
-  CelestialBody(const std::string& name, const char* fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, int satellites, bool ring);
+  CelestialBody(const std::string& name, const char* fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring);
   ~CelestialBody() { };
 
 private:
@@ -61,6 +61,7 @@ public:
   double getAphelion() const { return this->aphelion; }
   double getOrbit() const { return this->orbit; }
   double getOrbitRadius() const { return logScale(this->orbitRadius, "orbitRadius"); }
+  double getRotation() const { return this->rotation; }
   int getSatellites() const { return this->satellites; }
   bool getRing() const { return this->ring; }
 
@@ -77,6 +78,7 @@ private:
   const double aphelion;
   const double orbit;
   const double orbitRadius;
+  const double rotation;
   const int satellites;
   const bool ring;
 };
