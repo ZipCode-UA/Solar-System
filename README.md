@@ -21,5 +21,4 @@ Solar-Sytem is a GitHub collaboration demo
   - `mkdir build`
   - `cd build`
   - `cmake ..`
-  - `make`
-  - `./SolarSystem.exe`
+  - `make run`
