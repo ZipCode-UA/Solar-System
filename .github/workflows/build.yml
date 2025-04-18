@@ -1,9 +1,6 @@
 name: Build and Release
 
-on:
-  push:
-    branches:
-      - '**' # Triggers the workflow on any branch
+on: push
 
 jobs:
   build:
@@ -11,7 +8,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v2
@@ -30,7 +27,6 @@ jobs:
         run: cmake --build build --config Debug
 
       - name: Create Release
-        uses: actions/upload-artifact@v2
+        uses: softprops/action-gh-release@v1
         with:
-          name: release-artifacts
-          path: build/*.zip
+          files: build/Debug/SolarSystem.exe, build/Debug/SolarSystem.pdb
