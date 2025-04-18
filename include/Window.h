@@ -1,6 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <string_view>
 #include <vector>
 
 #include "raylib.h"
@@ -16,6 +17,7 @@ public:
 private:
   void SetMatrixProjection();
   void InitCamera();
+  void LoadResourceDirectory(const std::string& directory);
   void LoadTextures();
   void LoadModels();
   void DrawBackground();
