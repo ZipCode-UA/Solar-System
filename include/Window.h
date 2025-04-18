@@ -1,7 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <string_view>
+#include <string>
 #include <vector>
 
 #include "raylib.h"
