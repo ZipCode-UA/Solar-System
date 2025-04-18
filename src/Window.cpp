@@ -19,6 +19,9 @@
 
 #include "Window.h"
 
+#include <iostream>
+#include <stdlib.h>
+#include <string>
 #include <vector>
 
 #include "raylib.h"
@@ -31,13 +34,22 @@ Window::Window(const std::vector<CelestialBody>& SolarSystem)
   : SolarSystem(SolarSystem),
     focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
 {
-  InitWindow(1600, 1000, "Solar System");
-  ToggleBorderlessWindowed();
+  // Setup Window
+  SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
+  InitWindow(1920, 1080, "Solar System");
+  //ToggleBorderlessWindowed();
+
+  // Setup Internals
   InitCamera();
   SetTargetFPS(60);
+
+  // Load resources
+  std::string directory = "resources";
+  LoadResourceDirectory(directory);
   LoadTextures();
   LoadModels();
 
+  // Initialize rotation angles
   for (const auto iter : SolarSystem)
   {
     orbitRotationAngles.push_back(0);
@@ -72,17 +84,48 @@ void Window::InitCamera()
     nearPlane, farPlane);
 }
 
+void Window::LoadResourceDirectory(const std::string& directory)
+{
+  // Check the working directory
+  if (DirectoryExists(directory.c_str()))
+  {
+    ChangeDirectory(TextFormat("%s/%s", GetWorkingDirectory(), directory.c_str()));
+    return;
+  }
+
+  // Check application directory and 3 directories back
+  std::string text = "%s%s";
+  const std::string back = "../";
+  const std::string applicationDirectory = GetApplicationDirectory();
+  for (int i = 0; i != 4; ++i)
+  {
+    const std::string dir = TextFormat(text.c_str(), applicationDirectory.c_str(), directory.c_str());
+    if (DirectoryExists(dir.c_str()))
+    {
+      ChangeDirectory(dir.c_str());
+      return;
+    }
+    text.insert(2, back);
+  }
+
+  std::cerr << "Could not find resource directory";
+  exit(1);
+}
+
 void Window::LoadTextures()
 {
-  // TODO: Link assets directory to CMake build directory for shorter paths :)
-  background = LoadTexture("../assets/textures/Stars.jpg"); // Load image data into GPU memory (VRAM)
+  // Texture folder path
+  const std::string texturePath = "assets/textures/";
+
+  // Load background texture
+  const std::string backgroundPath = texturePath + "Stars.jpg";
+  background = LoadTexture(backgroundPath.c_str()); // Load image data into GPU memory (VRAM)
 
   // Load CelestialBody textures
   for (const auto iter : SolarSystem)
   {
-    std::string path = "../assets/textures/";
-    std::string name = iter.getFileName();
-    path += name;
+    const std::string fileName = iter.getFileName();
+    const std::string path = texturePath + fileName;
     Texture2D texture = LoadTexture(path.c_str());
     textures.push_back(texture);
   }
