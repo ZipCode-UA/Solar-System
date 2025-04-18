@@ -30,7 +30,6 @@ jobs:
         run: cmake --build build --config Debug
 
       - name: Create Release
-        if: github.ref == 'refs/heads/main'
         uses: actions/upload-artifact@v2
         with:
           name: release-artifacts
