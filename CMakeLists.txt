@@ -27,10 +27,7 @@ add_custom_target(run
 )
 
 # Executable
-add_executable(${PROJECT_NAME} "src/main.cpp")
-
-# Static compilation
-#set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+add_executable(${PROJECT_NAME} "src/main.cpp" "resources/assets/res/Solar-System.rc")
 
 # Dirs
 add_subdirectory(include)
