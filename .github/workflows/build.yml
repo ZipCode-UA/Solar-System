@@ -1,8 +1,5 @@
 name: Build and Release
 
-permissions:
-  contents: write
-
 on:
   push:
     branches:
@@ -33,10 +30,8 @@ jobs:
         run: cmake --build build --config Debug
 
       - name: Create Release
-        id: create_release
-        uses: softprops/action-gh-release@v1
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v2
         with:
-          tag_name: ${{ github.ref }}
-          files: build/Debug/Solar-System.exe, build/Debug/Solar-System.pdb
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: release-artifacts
+          path: build/*
