@@ -120,7 +120,8 @@ void Window::DrawCelestialBodies()
       rlPushMatrix();
         rlRotatef(axisRotationAngles[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody itself
         rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
-        DrawModel(models[i], (Vector3){ 0.0f, 0.0f, 0.0f }, 1.0f, WHITE); // Draw the CelestialBody
+        Vector3 position = { 0.0f, 0.0f, 0.0f };
+        DrawModel(models[i], position, 1.0f, WHITE); // Draw the CelestialBody
       rlPopMatrix();
     rlPopMatrix();
     ++i;

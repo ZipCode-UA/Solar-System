@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.30.0)
-project(SolarSystem LANGUAGES CXX)
+project(Solar-System LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -29,6 +29,9 @@ add_custom_target(run
 # Executable
 add_executable(${PROJECT_NAME} "src/main.cpp")
 
+# Static compilation
+#set_property(TARGET ${PROJECT_NAME} PROPERTY MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+
 # Dirs
 add_subdirectory(include)
 add_subdirectory(src)
@@ -38,3 +41,6 @@ target_link_libraries(${PROJECT_NAME} PRIVATE src)
 # Link raylib library
 target_link_libraries(src PRIVATE raylib)
 target_link_libraries(include INTERFACE raylib)
+
+# Include raylib directories
+target_include_directories(${PROJECT_NAME} PUBLIC ${raylib_INCLUDE_DIRS})
