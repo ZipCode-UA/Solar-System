@@ -27,7 +27,7 @@ add_custom_target(run
 )
 
 # Executable
-add_executable(${PROJECT_NAME} "src/main.cpp" "resources/assets/res/Solar-System.rc")
+add_executable(${PROJECT_NAME} "src/main.cpp" "resources/res/Solar-System.rc")
 
 # Dirs
 add_subdirectory(include)
@@ -39,5 +39,15 @@ target_link_libraries(${PROJECT_NAME} PRIVATE src)
 target_link_libraries(src PRIVATE raylib)
 target_link_libraries(include INTERFACE raylib)
 
-# Include raylib directories
-target_include_directories(${PROJECT_NAME} PUBLIC ${raylib_INCLUDE_DIRS})
+set(Assets
+    "resources/assets"
+)
+
+install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
+install(DIRECTORY ${Assets} DESTINATION bin)
+
+include(CPack)
+set(CPACK_GENERATOR "ZIP")
+set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
+set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "A 3D solar system display utilizing raylib")
