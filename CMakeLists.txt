@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# Static MSVC compilation
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 # Fetch raylib
@@ -21,7 +22,7 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-# make target - 'run' - compiles and runs the produced binary
+# Make target - 'run' - compiles and runs the produced binary
 add_custom_target(run
     COMMAND ${CMAKE_BINARY_DIR}/${PROJECT_NAME}
     DEPENDS ${PROJECT_NAME}
@@ -31,7 +32,14 @@ add_custom_target(run
 # Executable
 add_executable(${PROJECT_NAME} "src/main.cpp" "resources/res/Solar-System.rc")
 
-# Dirs
+# Disable debug console
+if(MSVC)
+    set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+elseif(CMAKE_COMPILER_IS_GNUCC)
+    set_target_properties(${PROJECT_NAME} PROPERTIES LINK_FLAGS "-mwindows")
+endif()
+
+# Directories
 add_subdirectory(include)
 add_subdirectory(src)
 target_link_libraries(${PROJECT_NAME} PRIVATE include)
@@ -41,13 +49,16 @@ target_link_libraries(${PROJECT_NAME} PRIVATE src)
 target_link_libraries(src PRIVATE raylib)
 target_link_libraries(include INTERFACE raylib)
 
+# Define Assets
 set(Assets
     "resources/assets"
 )
 
+# Install Assets
 install(TARGETS ${PROJECT_NAME} RUNTIME DESTINATION bin)
 install(DIRECTORY ${Assets} DESTINATION bin)
 
+# Package Assets
 include(CPack)
 set(CPACK_GENERATOR "ZIP")
 set(CPACK_PACKAGE_NAME "${PROJECT_NAME}")
