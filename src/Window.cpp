@@ -95,7 +95,6 @@ void Window::LoadResourceDirectory(const std::string& directory)
 
   // Check application directory and 3 directories back
   std::string text = "%s%s";
-  const std::string back = "../";
   const std::string applicationDirectory = GetApplicationDirectory();
   for (int i = 0; i != 4; ++i)
   {
@@ -105,7 +104,7 @@ void Window::LoadResourceDirectory(const std::string& directory)
       ChangeDirectory(dir.c_str());
       return;
     }
-    text.insert(2, back);
+    text.insert(2, "../");
   }
 
   std::cerr << "Could not find resource directory";
