@@ -123,9 +123,8 @@ void Window::LoadTextures()
   // Load CelestialBody textures
   for (const auto iter : SolarSystem)
   {
-    const std::string fileName = iter.getFileName();
-    const std::string path = texturePath + fileName;
-    Texture2D texture = LoadTexture(path.c_str());
+    const std::string celestialBodyPath = texturePath + iter.getFileName();
+    Texture2D texture = LoadTexture(celestialBodyPath.c_str());
     textures.push_back(texture);
   }
 }
