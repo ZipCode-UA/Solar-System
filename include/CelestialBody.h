@@ -37,7 +37,8 @@ private:
   friend void Celestial::setGreatestOrbitRadius(const std::vector<CelestialBody>& SolarSystem);
 
 public:
-  CelestialBody(const std::string& name, const char* fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring);
+  CelestialBody() = default;
+  CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring);
   CelestialBody(const CelestialBody&) = default;
   CelestialBody& operator=(CelestialBody&&) = default;
   ~CelestialBody() = default;
@@ -52,7 +53,7 @@ public:
 public:
   // Accessors
   std::string getName() const { return this->name; }
-  const char* getFileName() const { return this->fileName; }
+  std::string getFileName() const { return this->fileName; }
   double getMass() const { return this->mass; }
   double getVolume() const { return this->volume; }
   double getDensity() const { return this->density; }
@@ -69,7 +70,7 @@ public:
 
 private: 
   std::string name;
-  const char* fileName;
+  std::string fileName;
   double mass;
   double volume;
   double density;

@@ -72,7 +72,7 @@ namespace Celestial
   }
 }
 
-CelestialBody::CelestialBody(const std::string& name, const char* fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring)
+CelestialBody::CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring)
   : name(name),
     fileName(fileName),
     mass(mass),
