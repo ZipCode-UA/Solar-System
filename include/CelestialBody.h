@@ -38,7 +38,7 @@ private:
 
 public:
   CelestialBody() = default;
-  CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring);
+  CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbitRotation, double axisRotation, int satellites, bool ring);
   CelestialBody(const CelestialBody&) = default;
   CelestialBody& operator=(CelestialBody&&) = default;
   ~CelestialBody() = default;
@@ -62,28 +62,28 @@ public:
   double getVelocity() const { return this->velocity; }
   double getPerihelion() const { return this->perihelion; }
   double getAphelion() const { return this->aphelion; }
-  double getOrbit() const { return this->orbit; }
   double getOrbitRadius() const { return logScale(this->orbitRadius, "orbitRadius"); }
-  double getAxisRotation() const { return this->rotation; }
+  double getOrbitRotation() const { return this->orbitRotation; }
+  double getAxisRotation() const { return this->axisRotation; }
   int getSatellites() const { return this->satellites; }
   bool getRing() const { return this->ring; }
 
 private: 
   std::string name;
   std::string fileName;
-  double mass;
-  double volume;
-  double density;
-  double gravity;
-  double radius;
-  double velocity;
-  double perihelion;
-  double aphelion;
-  double orbit;
-  double orbitRadius;
-  double rotation;
-  int satellites;
-  bool ring;
+  double mass = 0;
+  double volume = 0;
+  double density = 0;
+  double gravity = 0;
+  double radius = 0;
+  double velocity = 0;
+  double perihelion = 0;
+  double aphelion = 0; 
+  double orbitRadius = 0;
+  double orbitRotation = 0;
+  double axisRotation = 0;
+  int satellites = 0;
+  bool ring = 0;
 };
 
 #endif // CELESTIALBODY_H

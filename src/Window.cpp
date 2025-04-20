@@ -201,7 +201,7 @@ void Window::Update(float& elapsedTime)
   int i = 0;
   for (const auto iter : SolarSystem)
   {
-    orbitRotationAngles[i] = (iter.getOrbit() / 360.0f) * timeScale;
+    orbitRotationAngles[i] = (iter.getOrbitRotation() / 360.0f) * timeScale;
     axisRotationAngles[i] = (iter.getAxisRotation() / 360.0f) * timeScale;
     ++i;
   }
