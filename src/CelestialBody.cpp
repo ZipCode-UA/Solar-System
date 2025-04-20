@@ -1,14 +1,17 @@
 #include "CelestialBody.h"
 
+#include <algorithm>
 #include <cmath>
 #include <string>
 
 namespace Celestial
 {
-  // TODO: Sort vector by orbitRadius from least to highest
   void sort(std::vector<CelestialBody>& SolarSystem)
   {
-
+    std::sort(SolarSystem.begin(), SolarSystem.end(), [](const CelestialBody& a, const CelestialBody& b)
+    {
+      return b.getOrbitRadius() > a.getOrbitRadius(); // Sort in descending order
+    });
   }
 
   void setBounds(const std::vector<CelestialBody>& SolarSystem)

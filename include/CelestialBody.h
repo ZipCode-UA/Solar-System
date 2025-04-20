@@ -38,7 +38,9 @@ private:
 
 public:
   CelestialBody(const std::string& name, const char* fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring);
-  ~CelestialBody() { };
+  CelestialBody(const CelestialBody&) = default;
+  CelestialBody& operator=(CelestialBody&&) = default;
+  ~CelestialBody() = default;
 
 private:
   double logScale(double value, const std::string& type) const;
@@ -66,21 +68,21 @@ public:
   bool getRing() const { return this->ring; }
 
 private: 
-  const std::string name;
+  std::string name;
   const char* fileName;
-  const double mass;
-  const double volume;
-  const double density;
-  const double gravity;
-  const double radius;
-  const double velocity;
-  const double perihelion;
-  const double aphelion;
-  const double orbit;
-  const double orbitRadius;
-  const double rotation;
-  const int satellites;
-  const bool ring;
+  double mass;
+  double volume;
+  double density;
+  double gravity;
+  double radius;
+  double velocity;
+  double perihelion;
+  double aphelion;
+  double orbit;
+  double orbitRadius;
+  double rotation;
+  int satellites;
+  bool ring;
 };
 
 #endif // CELESTIALBODY_H

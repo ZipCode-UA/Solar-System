@@ -33,7 +33,7 @@ std::vector<CelestialBody> getSolarSystem()
 {
   std::vector<CelestialBody> SolarSystem;
 
-  CelestialBody Sun
+  const CelestialBody Sun
   (
     "Sun",
     "Sun.jpg",
@@ -52,7 +52,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Sun);
 
-  CelestialBody Mercury
+  const CelestialBody Mercury
   (
     "Mercury",
     "Mercury.jpg",
@@ -71,7 +71,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Mercury);
 
-  CelestialBody Venus
+  const CelestialBody Venus
   (
     "Venus",
     "Venus.jpg",
@@ -90,7 +90,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Venus);
 
-  CelestialBody Earth
+  const CelestialBody Earth
   (
     "Earth",
     "Earth.jpg",
@@ -109,7 +109,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Earth);
 
-  CelestialBody Mars
+  const CelestialBody Mars
   (
     "Mars",
     "Mars.jpg",
@@ -128,7 +128,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Mars);
 
-  CelestialBody Jupiter
+  const CelestialBody Jupiter
   (
     "Jupiter",
     "Jupiter.jpg",
@@ -147,7 +147,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Jupiter);
 
-  CelestialBody Saturn
+  const CelestialBody Saturn
   {
     "Saturn",
     "Saturn.jpg",
@@ -166,7 +166,7 @@ std::vector<CelestialBody> getSolarSystem()
   };
   SolarSystem.push_back(Saturn);
 
-  CelestialBody Uranus
+  const CelestialBody Uranus
   (
     "Uranus",
     "Uranus.jpg",
@@ -185,7 +185,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Uranus);
 
-  CelestialBody Neptune
+  const CelestialBody Neptune
   (
     "Neptune",
     "Neptune.jpg",
@@ -204,7 +204,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Neptune);
 
-  CelestialBody Pluto
+  const CelestialBody Pluto
   (
     "Pluto",
     "Pluto.jpg",
