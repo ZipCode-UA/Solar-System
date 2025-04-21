@@ -21,9 +21,9 @@ namespace Celestial
     setGreatestRadius(SolarSystem);
     setGreatestOrbitRadius(SolarSystem);
 
-    scaleTargetMinRadiusSize = 1;
+    scaleTargetMinRadiusSize = 20;
     scaleTargetMaxRadiusSize = 1000;
-    scaleTargetMinOrbitRadiusSize = scaleTargetMinRadiusSize + scaleTargetMaxRadiusSize;
+    scaleTargetMinOrbitRadiusSize = (scaleTargetMinRadiusSize * 50) + scaleTargetMaxRadiusSize;
     scaleTargetMaxOrbitRadiusSize = scaleTargetMaxRadiusSize * log(Celestial::greatestOrbitRadius / Celestial::greatestRadius) * 2;
   }
   
