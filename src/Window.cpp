@@ -19,8 +19,6 @@
 
 #include "Window.h"
 
-#include <iostream>
-#include <stdlib.h>
 #include <string>
 #include <vector>
 
@@ -30,49 +28,25 @@
 
 #include "CelestialBody.h"
 
-Window::Window(const std::vector<CelestialBody>& SolarSystem)
-  : SolarSystem(SolarSystem),
-    focalSize(static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale))
+Window::Window()
 {
   // Setup Window
   SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
   InitWindow(1920, 1080, "Solar System");
-  //ToggleBorderlessWindowed();
 
   // Setup Internals
   InitCamera();
   SetTargetFPS(60);
-
-  // Load resources
-  std::string directory = "resources";
-  LoadResourceDirectory(directory);
-  LoadTextures();
-  LoadModels();
-
-  // Initialize rotation angles
-  for (const auto iter : SolarSystem)
-  {
-    orbitRotationAngles.push_back(0);
-    axisRotationAngles.push_back(0);
-  }
 }
 
 Window::~Window()
 {
-  UnloadTexture(background);
-  
-  for (const auto iter : textures)
-    UnloadTexture(iter);
-
-  for (const auto iter : models)
-    UnloadModel(iter);
-
   CloseWindow();
 }
 
 void Window::InitCamera()
 {
-  camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
+  camera.position = Vector3{ 0, 0, 0 }; // Camera position
   camera.target = Vector3{ 0.0f, 0.0f, 0.0f }; // Camera looking at point
   camera.up = Vector3{ 0.0f, 1.0f, 0.0f }; // Camera up vector (rotation towards target)
   camera.fovy = 45.0f; // Camera field-of-view Y
@@ -84,70 +58,15 @@ void Window::InitCamera()
     nearPlane, farPlane);
 }
 
-void Window::LoadResourceDirectory(const std::string& directory)
-{
-  // Check the working directory
-  if (DirectoryExists(directory.c_str()))
-  {
-    ChangeDirectory(TextFormat("%s/%s", GetWorkingDirectory(), directory.c_str()));
-    return;
-  }
-
-  // Check application directory and 3 directories back
-  std::string text = "%s%s";
-  const std::string applicationDirectory = GetApplicationDirectory();
-  for (int i = 0; i != 4; ++i)
-  {
-    const std::string dir = TextFormat(text.c_str(), applicationDirectory.c_str(), directory.c_str());
-    if (DirectoryExists(dir.c_str()))
-    {
-      ChangeDirectory(dir.c_str());
-      return;
-    }
-    text.insert(2, "../");
-  }
-
-  std::cerr << "Could not find resource directory";
-  exit(1);
-}
-
-void Window::LoadTextures()
-{
-  // Texture folder path
-  const std::string texturePath = "assets/textures/";
-
-  // Load background texture
-  const std::string backgroundPath = texturePath + "Stars.jpg";
-  background = LoadTexture(backgroundPath.c_str()); // Load image data into GPU memory (VRAM)
-
-  // Load CelestialBody textures
-  for (const auto iter : SolarSystem)
-  {
-    const std::string celestialBodyPath = texturePath + iter.getFileName();
-    Texture2D texture = LoadTexture(celestialBodyPath.c_str());
-    textures.push_back(texture);
-  }
-}
-
-void Window::LoadModels()
-{
-  // Load CelestialBody models
-  int i = 0;
-  for (const auto iter : SolarSystem)
-  {
-    Mesh mesh = GenMeshSphere(1.0f, 32, 32);
-    Model model = LoadModelFromMesh(mesh);
-    model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = textures[i++];
-    models.push_back(model);
-  }
-}
-
-void Window::DrawBackground()
+void Window::DrawBackground(Texture2D& background)
 {
   DrawTexture(background, 0, 0, WHITE);
 }
 
-void Window::DrawCelestialBodies()
+void Window::DrawCelestialBodies(std::vector<Model>& models,
+                                 std::vector<CelestialBody>& SolarSystem,
+                                 std::vector<double>& orbitRotationAngles,
+                                 std::vector<double>& axisRotationAngles)
 {
   int i = 0;
   for (const auto iter : SolarSystem)
@@ -174,44 +93,29 @@ bool Window::Open()
   return !WindowShouldClose();
 }
 
-void Window::Update(float& elapsedTime)
+void Window::Draw(Font& font,
+                  Texture2D& background,
+                  std::vector<Model>& models,
+                  std::vector<CelestialBody>& SolarSystem,
+                  std::vector<double>& orbitRotationAngles,
+                  std::vector<double>& axisRotationAngles,
+                  int days)
 {
-  elapsedTime += GetFrameTime();
+  const float focalSize = (static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale));
+  camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
 
   UpdateCamera(&camera, CAMERA_ORBITAL);
 
-  /*
-  // Update rotation vectors
-  int i = 0;
-  const double secondsInDay = 86400;
-  const double daysElapsed = (elapsedTime * timeScale) / secondsInDay;
-  for (const auto iter : SolarSystem)
-  {
-    const double daysPerOneOrbitDegree = iter.getOrbit() / 360.0f;
-    orbitRotationAngles[i] = daysElapsed / daysPerOneOrbitDegree;
-
-    const double daysPerOneAxisDegree = iter.getAxisRotation() / 360.0f;
-    axisRotationAngles[i] = daysElapsed / daysPerOneAxisDegree;
-
-    ++i;
-  }
-  */
-
-  // Update rotation vectors
-  int i = 0;
-  for (const auto iter : SolarSystem)
-  {
-    orbitRotationAngles[i] = (iter.getOrbit() / 360.0f) * timeScale;
-    axisRotationAngles[i] = (iter.getAxisRotation() / 360.0f) * timeScale;
-    ++i;
-  }
+  std::string frames = "Days: ";
+  frames += std::to_string(days);
 
   BeginDrawing();
     ClearBackground(BLACK);
-    DrawBackground();
+    DrawBackground(background);
+    DrawTextEx(font, frames.c_str(), { 10, 10 }, 38, 2, WHITE);
     BeginMode3D(camera);
       rlSetMatrixProjection(proj); // Override the projection matrix with a custom far plane
-      DrawCelestialBodies();
+      DrawCelestialBodies(models, SolarSystem, orbitRotationAngles, axisRotationAngles);
     EndMode3D();
   EndDrawing();
 }

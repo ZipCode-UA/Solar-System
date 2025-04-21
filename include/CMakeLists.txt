@@ -1,6 +1,7 @@
 set(Includes
         # Headers
         "CelestialBody.h"
+        "Game.h"
         "SolarSystem.h"
         "Window.h"
         #".h"
