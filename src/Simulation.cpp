@@ -1,4 +1,4 @@
-#include "Game.h"
+#include "Simulation.h"
 
 #include <memory>
 #include <stdlib.h>
@@ -12,7 +12,7 @@
 #include "SolarSystem.h"
 #include "Window.h"
 
-Game::Game()
+Simulation::Simulation()
 {
   // Create Window
   window = std::make_unique<Window>();
@@ -39,7 +39,7 @@ Game::Game()
   running = true;
 }
 
-Game::~Game()
+Simulation::~Simulation()
 {
   UnloadFont(font);
 
@@ -52,7 +52,7 @@ Game::~Game()
   UnloadTexture(background);
 }
 
-void Game::update()
+void Simulation::update()
 {
   elapsedTime += timeScale;
 
@@ -64,7 +64,7 @@ void Game::update()
     running = false;
 }
 
-void Game::LoadResourceDirectory(const std::string& directory)
+void Simulation::LoadResourceDirectory(const std::string& directory)
 {
   // Check the working directory
   if (DirectoryExists(directory.c_str()))
@@ -91,12 +91,12 @@ void Game::LoadResourceDirectory(const std::string& directory)
   exit(1);
 }
 
-void Game::LoadFont(const std::string& directory)
+void Simulation::LoadFont(const std::string& directory)
 {
   font = LoadFontEx("SpaceMono/SpaceMonoNerdFontMono-Bold.ttf", 64, 0, 0);
 }
 
-void Game::LoadTextures(const std::string& directory)
+void Simulation::LoadTextures(const std::string& directory)
 {
   // Load background texture
   const std::string backgroundPath = directory + "Stars.jpg";
@@ -111,7 +111,7 @@ void Game::LoadTextures(const std::string& directory)
   }
 }
 
-void Game::LoadModels()
+void Simulation::LoadModels()
 {
   // Load CelestialBody models
   int i = 0;
@@ -124,7 +124,7 @@ void Game::LoadModels()
   }
 }
 
-void Game::updateRotation()
+void Simulation::updateRotation()
 {
   // Update rotation vectors
   const double secondsInDay = 86400;

@@ -1,5 +1,5 @@
-#ifndef GAME_H
-#define GAME_H
+#ifndef SIMULATION_H
+#define SIMULATION_H
 
 #include <memory>
 #include <string>
@@ -10,11 +10,11 @@
 #include "CelestialBody.h"
 #include "Window.h"
 
-class Game
+class Simulation
 {
 public:
-  Game();
-  ~Game();
+  Simulation();
+  ~Simulation();
 
 public:
   void update();
@@ -54,4 +54,4 @@ public:
   bool running = false;
 };
 
-#endif // GAME_H
+#endif // SIMULATION_H

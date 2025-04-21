@@ -1,10 +1,10 @@
-#include "Game.h"
+#include "Simulation.h"
 
 int main()
 {
-  Game game;
-  while (game.running)
+  Simulation simulation;
+  while (simulation.running)
   {
-    game.update();
+    simulation.update();
   }
 }

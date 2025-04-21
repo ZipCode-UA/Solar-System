@@ -1,7 +1,7 @@
 set(Sources
         # Sources
         "CelestialBody.cpp"
-        "Game.cpp"
+        "Simulation.cpp"
         "main.cpp"
         "SolarSystem.cpp"
         "Window.cpp"
