@@ -98,7 +98,8 @@ void Window::Draw(Font& font,
                   std::vector<CelestialBody>& SolarSystem,
                   std::vector<double>& orbitRotationAngles,
                   std::vector<double>& axisRotationAngles,
-                  int days)
+                  int days,
+                  int timeScale)
 {
   const float focalSize = (static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale));
   camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
@@ -108,10 +109,15 @@ void Window::Draw(Font& font,
   std::string frames = "Days: ";
   frames += std::to_string(days);
 
+  std::string speed = "Time: ";
+  speed += std::to_string(timeScale);
+  speed += "x";
+
   BeginDrawing();
     ClearBackground(BLACK);
     DrawBackground(background);
     DrawTextEx(font, frames.c_str(), { 10, 10 }, 38, 2, WHITE);
+    DrawTextEx(font, speed.c_str(), { 10, 50 }, 38, 2, WHITE);
     BeginMode3D(camera);
       rlSetMatrixProjection(proj); // Override the projection matrix with a custom far plane
       DrawCelestialBodies(models, SolarSystem, orbitRotationAngles, axisRotationAngles);

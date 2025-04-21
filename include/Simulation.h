@@ -30,7 +30,7 @@ private:
 
 private:
   double elapsedTime = 0;
-  double timeScale = 1000;
+  int timeScale = 1000;
   int days = 0;
 
 private:

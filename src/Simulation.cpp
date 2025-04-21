@@ -59,7 +59,7 @@ void Simulation::update()
   updateRotation();
 
   if (window->Open())
-    window->Draw(font, background, models, SolarSystem, orbitRotationAngles, axisRotationAngles, days);
+    window->Draw(font, background, models, SolarSystem, orbitRotationAngles, axisRotationAngles, days, timeScale);
   else
     running = false;
 }
@@ -144,13 +144,13 @@ void Simulation::updateRotation()
     const double orbitSeconds = iter.getOrbit() * secondsInDay;
     const double orbitAngularVelocity = (2 * PI) / orbitSeconds;
     const double orbitDisplacement = orbitAngularVelocity * (180 / PI);
-    orbitRotationAngles[i] += orbitDisplacement * timeScale;
+    orbitRotationAngles[i] += orbitDisplacement * static_cast<double>(timeScale);
 
     // Calculate axis angle displacement per second
     const double axisSeconds = iter.getAxisRotation() * secondsInHour;
     const double axisAngularVelocity = (2 * PI) / axisSeconds;
     const double axisDisplacement = axisAngularVelocity * (180 / PI);
-    axisRotationAngles[i] += axisDisplacement * timeScale;
+    axisRotationAngles[i] += axisDisplacement * static_cast<double>(timeScale);
 
     ++i;
   }
