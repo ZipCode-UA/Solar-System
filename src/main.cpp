@@ -1,20 +1,10 @@
-#include <vector>
-
-#include "CelestialBody.h"
-#include "SolarSystem.h"
-#include "Window.h"
+#include "Simulation.h"
 
 int main()
 {
-  std::vector<CelestialBody> SolarSystem = getSolarSystem();
-  Celestial::sort(SolarSystem);
-  Celestial::setBounds(SolarSystem);
-
-  float elapsedTime = 0.0f;
-
-  Window window(SolarSystem);
-  while(window.Open())
+  Simulation simulation;
+  while (simulation.running)
   {
-    window.Update(elapsedTime);
+    simulation.update();
   }
 }

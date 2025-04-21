@@ -1,7 +1,6 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <string>
 #include <vector>
 
 #include "raylib.h"
@@ -11,40 +10,36 @@
 class Window
 {
 public:
-  Window(const std::vector<CelestialBody>& SolarSystem);
+  Window();
   ~Window();
 
 private:
   void SetMatrixProjection();
   void InitCamera();
-  void LoadResourceDirectory(const std::string& directory);
-  void LoadTextures();
-  void LoadModels();
-  void DrawBackground();
-  void DrawCelestialBodies();
+  void DrawBackground(Texture2D& background);
+  void DrawCelestialBodies(std::vector<Model>& models,
+                           std::vector<CelestialBody>& SolarSystem,
+                           std::vector<double>& orbitRotationAngles,
+                           std::vector<double>& axisRotationAngles);
 
 public:
   bool Open();
-  void Update(float& elapsedTime);
+  void Draw(Font& font,
+            Texture2D& background,
+            std::vector<Model>& models,
+            std::vector<CelestialBody>& SolarSystem,
+            std::vector<double>& orbitRotationAngles,
+            std::vector<double>& axisRotationAngles,
+            int days);
 
 private:
   Camera camera = { 0 };
   Matrix proj;
-  Texture2D background;
-
-private:
-  const std::vector<CelestialBody>& SolarSystem;
-  std::vector<double> orbitRotationAngles;
-  std::vector<double> axisRotationAngles;
-  std::vector<Texture2D> textures;
-  std::vector<Model> models;
 
 private:
   const float nearPlane = 1.0f;
   const float farPlane = 100000.0f;
-  const float focalScale = 1.0f;
-  const float focalSize;
-  const float timeScale = 1.0f;
+  float focalScale = 1.0f;
 };
 
 #endif // WINDOW_H
