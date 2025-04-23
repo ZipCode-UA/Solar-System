@@ -31,69 +31,70 @@ void drawTime(Font& font, int days, int timeScale)
   speed += std::to_string(timeScale);
   speed += "x";
 
-  DrawTextEx(font, daysElapsed.c_str(), { 10, 10 }, 38, 2, WHITE);
-  DrawTextEx(font, yearsElapsed.c_str(), { 10, 50 }, 38, 2, WHITE);
-  DrawTextEx(font, speed.c_str(), { 10, 90 }, 38, 2, WHITE);
+  DrawTextEx(font, daysElapsed.c_str(), { 10, 40 }, 38, 2, WHITE);
+  DrawTextEx(font, yearsElapsed.c_str(), { 10, 80 }, 38, 2, WHITE);
+  DrawTextEx(font, speed.c_str(), { 10, 120 }, 38, 2, WHITE);
 }
 
 void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
 {
+  std::vector<std::string> UI;
+
   std::string body = SolarSystem[index].getName();
   body += " Facts:";
+  UI.push_back(body);
 
   std::string mass = "Mass: ";
-  mass += std::to_string(static_cast<double>(SolarSystem[index].getMass()));
+  mass += std::to_string(static_cast<long long>(SolarSystem[index].getMass()));
   mass += "kg";
+  UI.push_back(mass);
 
   std::string radius = "Radius ";
-  radius += std::to_string(static_cast<double>(SolarSystem[index].getRadius()));
+  radius += std::to_string(static_cast<long long>(SolarSystem[index].getRadius()));
   radius += "km";
+  UI.push_back(radius);
 
   std::string volume = "Volume: ";
-  volume += std::to_string(static_cast<double>(SolarSystem[index].getVolume()));
+  volume += std::to_string(static_cast<long long>(SolarSystem[index].getVolume()));
   volume += "km^3";
+  UI.push_back(volume);
 
   std::string gravity = "Gravity: ";
   gravity += std::to_string(static_cast<int>(SolarSystem[index].getGravity()));
   gravity += "m/s^2";
+  UI.push_back(gravity);
 
   std::string orbit = "Orbit Length: ";
   orbit += std::to_string(static_cast<int>(SolarSystem[index].getOrbit()));
   orbit += " days";
+  UI.push_back(orbit);
 
   std::string day = "Day Length: ";
   day += std::to_string(static_cast<int>(SolarSystem[index].getAxisRotation()));
   day += " hours";
+  UI.push_back(day);
 
   std::string satellites = "Number of Moons: ";
   satellites += std::to_string(static_cast<int>(SolarSystem[index].getSatellites()));
+  UI.push_back(satellites);
 
-  Vector2 UIstart = { 10, static_cast<float>(GetScreenHeight() - 325) };
-  Vector2 UIprevious = UIstart;
-  Vector2 UIcurrent;
+  // UI modifiers
   int UIfontSize = 30;
   int UIspacingSize = 2;
   float UIgap = UIfontSize + 10;
+
+  // UI location vectors
+  Vector2 UIstart = { 10, static_cast<float>(GetScreenHeight() - 400) };
+  Vector2 UIcurrent = UIstart;
+
+  // Draw heading
   DrawTextEx(font, body.c_str(), UIstart, 60, UIspacingSize, WHITE);
-  UIcurrent = UIprevious;
-  UIcurrent.y = UIprevious.y + (UIgap * 2);
-  DrawTextEx(font, mass.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
-  UIprevious = UIcurrent;
-  UIcurrent.y = UIprevious.y + UIgap;
-  DrawTextEx(font, radius.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
-  UIprevious = UIcurrent;
-  UIcurrent.y = UIprevious.y + UIgap;
-  DrawTextEx(font, volume.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
-  UIprevious = UIcurrent;
-  UIcurrent.y = UIprevious.y + UIgap;
-  DrawTextEx(font, gravity.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
-  UIprevious = UIcurrent;
-  UIcurrent.y = UIprevious.y + UIgap;
-  DrawTextEx(font, orbit.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
-  UIprevious = UIcurrent;
-  UIcurrent.y = UIprevious.y + UIgap;
-  DrawTextEx(font, day.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
-  UIprevious = UIcurrent;
-  UIcurrent.y = UIprevious.y + UIgap;
-  DrawTextEx(font, satellites.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
+  UIcurrent.y += UIgap * 2;
+
+  // Draw UI members
+  for (const auto iter : UI)
+  {
+    DrawTextEx(font, iter.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
+    UIcurrent.y += UIgap;
+  }
 }
