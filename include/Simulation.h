@@ -29,12 +29,12 @@ private:
   void updateRotation();
 
 private:
-  static const int timeScaleDefault = 20000;
+  static const inline int timeScaleDefault = 20000;
 
 public:
+  static const inline int timeScaleModifier = 1000;
+  static const inline int bigTimeScaleModifier = timeScaleModifier * 10;
   static inline int timeScale = timeScaleDefault;
-  static inline int timeScaleModifier = 1000;
-  static inline int bigTimeScaleModifier = timeScaleModifier * 10;
   static inline bool rotation = false;
   static inline bool pause = false;
 
