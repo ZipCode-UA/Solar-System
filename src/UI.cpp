@@ -21,19 +21,36 @@ void DrawUI(Font& font, std::vector<CelestialBody>& SolarSystem, int days, int t
 
 void drawTime(Font& font, int days, int timeScale)
 {
+  std::vector<std::string> UI;
+
   std::string daysElapsed = "Days: ";
   daysElapsed += std::to_string(days);
+  UI.push_back(daysElapsed);
 
   std::string yearsElapsed = "Years: ";
   yearsElapsed += std::to_string(days / 365);
+  UI.push_back(yearsElapsed);
 
   std::string speed = "Time: ";
   speed += std::to_string(timeScale);
   speed += "x";
+  UI.push_back(speed);
 
-  DrawTextEx(font, daysElapsed.c_str(), { 10, 40 }, 38, 2, WHITE);
-  DrawTextEx(font, yearsElapsed.c_str(), { 10, 80 }, 38, 2, WHITE);
-  DrawTextEx(font, speed.c_str(), { 10, 120 }, 38, 2, WHITE);
+  // UI modifiers
+  int UIfontSize = 38;
+  int UIspacingSize = 2;
+  float UIgap = 40;
+
+  // UI location vectors
+  Vector2 UIstart = { 10, 40 };
+  Vector2 UIcurrent = UIstart;
+
+  // Draw UI members
+  for (const auto iter : UI)
+  {
+    DrawTextEx(font, iter.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
+    UIcurrent.y += UIgap;
+  }
 }
 
 void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
@@ -81,7 +98,7 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   // UI modifiers
   int UIfontSize = 30;
   int UIspacingSize = 2;
-  float UIgap = UIfontSize + 10;
+  float UIgap = 40;
 
   // UI location vectors
   Vector2 UIstart = { 10, static_cast<float>(GetScreenHeight() - 400) };
