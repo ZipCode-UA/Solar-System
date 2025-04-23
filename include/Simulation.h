@@ -8,7 +8,6 @@
 #include <raylib.h>
 
 #include "CelestialBody.h"
-#include "Input.h"
 #include "Window.h"
 
 class Simulation
@@ -29,8 +28,11 @@ private:
 private:
   void updateRotation();
 
+private:
+  static const int timeScaleDefault = 20000;
+
 public:
-  static inline int timeScale = 1000;
+  static inline int timeScale = timeScaleDefault;
   static inline int timeScaleModifier = 1000;
   static inline int bigTimeScaleModifier = timeScaleModifier * 10;
   static inline bool rotation = false;
