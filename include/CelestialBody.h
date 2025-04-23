@@ -48,7 +48,8 @@ private:
 
 public:
   double getDistance(const CelestialBody& compare) const;
-  double getAttractionForce(const CelestialBody& compare) const;
+  double getDistance(const CelestialBody& compare, double uptime) const;
+  double getAttractionForce(const CelestialBody& compare, double uptime) const;
 
 public:
   // Accessors

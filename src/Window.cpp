@@ -19,7 +19,6 @@
 
 #include "Window.h"
 
-#include <string>
 #include <vector>
 
 #include "raylib.h"
@@ -27,12 +26,15 @@
 #include "raymath.h"
 
 #include "CelestialBody.h"
+#include "UI.h"
 
 Window::Window()
 {
   // Setup Window
   SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
-  InitWindow(1920, 1080, "Solar System");
+  InitWindow(GetScreenWidth(), GetScreenHeight(), "Solar System");
+  ToggleBorderlessWindowed();
+  HideCursor();
 
   // Setup Internals
   InitCamera();
@@ -80,8 +82,7 @@ void Window::DrawCelestialBodies(std::vector<Model>& models,
       rlPushMatrix();
         rlRotatef(axisRotationAngles[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody itself
         rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
-        Vector3 position = { 0.0f, 0.0f, 0.0f };
-        DrawModel(models[i], position, 1.0f, WHITE); // Draw the CelestialBody
+        DrawModel(models[i], { 0.0f, 0.0f, 0.0f }, 1.0f, WHITE); // Draw the CelestialBody
       rlPopMatrix();
     rlPopMatrix();
     ++i;
@@ -99,20 +100,18 @@ void Window::Draw(Font& font,
                   std::vector<CelestialBody>& SolarSystem,
                   std::vector<double>& orbitRotationAngles,
                   std::vector<double>& axisRotationAngles,
-                  int days)
+                  int days,
+                  int timeScale)
 {
   const float focalSize = (static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale));
   camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
 
   UpdateCamera(&camera, CAMERA_ORBITAL);
 
-  std::string frames = "Days: ";
-  frames += std::to_string(days);
-
   BeginDrawing();
     ClearBackground(BLACK);
     DrawBackground(background);
-    DrawTextEx(font, frames.c_str(), { 10, 10 }, 38, 2, WHITE);
+    DrawUI(font, SolarSystem, days, timeScale);
     BeginMode3D(camera);
       rlSetMatrixProjection(proj); // Override the projection matrix with a custom far plane
       DrawCelestialBodies(models, SolarSystem, orbitRotationAngles, axisRotationAngles);

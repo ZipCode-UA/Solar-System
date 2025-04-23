@@ -30,7 +30,8 @@ public:
             std::vector<CelestialBody>& SolarSystem,
             std::vector<double>& orbitRotationAngles,
             std::vector<double>& axisRotationAngles,
-            int days);
+            int days,
+            int timeScale);
 
 private:
   Camera camera = { 0 };

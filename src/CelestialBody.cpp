@@ -21,9 +21,9 @@ namespace Celestial
     setGreatestRadius(SolarSystem);
     setGreatestOrbitRadius(SolarSystem);
 
-    scaleTargetMinRadiusSize = 1;
+    scaleTargetMinRadiusSize = 20;
     scaleTargetMaxRadiusSize = 1000;
-    scaleTargetMinOrbitRadiusSize = scaleTargetMinRadiusSize + scaleTargetMaxRadiusSize;
+    scaleTargetMinOrbitRadiusSize = (scaleTargetMinRadiusSize * 50) + scaleTargetMaxRadiusSize;
     scaleTargetMaxOrbitRadiusSize = scaleTargetMaxRadiusSize * log(Celestial::greatestOrbitRadius / Celestial::greatestRadius) * 2;
   }
   
@@ -133,7 +133,7 @@ double CelestialBody::getDistance(const CelestialBody& compare) const
   return fabs(meanDistanceA - meanDistanceB);
 }
 
-//TODO: Implement this function in its entirety - missing time parameter
+// TODO: Implement this function in its entirety - missing time parameter
 /**
   Calculates a more accurate distance between two celestial bodies
   Assumptions: 
@@ -145,44 +145,42 @@ double CelestialBody::getDistance(const CelestialBody& compare) const
   @param b - The second celestial body.
   @return The distance between the two celestial bodies.
 */
-
-/*
-double CelestialBody::getDistance(const CelestialBody& compare) const
+double CelestialBody::getDistance(const CelestialBody& compare, double uptime) const
 {
 
   const double PI = 3.14159265358979323846;
 
-  //semi major axis calculation
+  // semi major axis calculation
   double meanDistanceA = (perihelion + aphelion) / 2;
   double meanDistanceB = (compare.getPerihelion() + compare.getAphelion()) / 2;
 
-  //orbital eccentricity calculation
+  // orbital eccentricity calculation
   double eccentricityA = (aphelion - perihelion) / (aphelion + perihelion);
   double eccentricityB = (compare.getAphelion() - compare.getPerihelion()) / (compare.getAphelion() + compare.getPerihelion());
 
-  //true anomaly calculation (approximation)
-  //TODO: Implement a more accurate calculation
-  //TODO: Use current program time to calculate the true anomaly - time is currently hardcoded
-  double time = 60; //time in days
-  double thetaA = 2 * PI * time / orbit();
+  // true anomaly calculation (approximation)
+  // TODO: Implement a more accurate calculation
+  // TODO: Use current program time to calculate the true anomaly - time is currently hardcoded
+  double secondsInDay = 86400;
+  double time = uptime / secondsInDay; // time in days
+  double thetaA = 2 * PI * time / orbit;
   double thetaB = 2 * PI * time / compare.getOrbit();
 
-  //Radial distance calculation -- using orbit equation
+  // Radial distance calculation -- using orbit equation
   double radialA = (meanDistanceA * (1 - pow(eccentricityA, 2))) / (1 + eccentricityA * cos(thetaA));
   double radialB = (meanDistanceB * (1 - pow(eccentricityB, 2))) / (1 + eccentricityB * cos(thetaB));
 
-  //x-y coordinates calculation
+  // x-y coordinates calculation
   double xA = radialA * cos(thetaA);
   double yA = radialA * sin(thetaA);
   double xB = radialB * cos(thetaB);
   double yB = radialB * sin(thetaB);
 
-  //distance calculation -- using distance formula
+  // distance calculation -- using distance formula
   return sqrt(pow(xA - xB, 2) + pow(yA - yB, 2));
 }
-*/
 
-double CelestialBody::getAttractionForce(const CelestialBody& compare) const
+double CelestialBody::getAttractionForce(const CelestialBody& compare, double uptime) const
 {
   const double gravitationalForce = 6.6743 * pow(10, -11); // m^3/kg^2
   const double distance = getDistance(compare);

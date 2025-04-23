@@ -9,6 +9,7 @@
 #include <raylib.h>
 
 #include "CelestialBody.h"
+#include "Input.h"
 #include "SolarSystem.h"
 #include "Window.h"
 
@@ -35,6 +36,8 @@ Simulation::Simulation()
     axisRotationAngles.push_back(0);
   }
 
+  // Seed random number generator
+  SetRandomSeed(time(nullptr));
   // Toggle running state
   running = true;
 }
@@ -54,12 +57,16 @@ Simulation::~Simulation()
 
 void Simulation::update()
 {
-  elapsedTime += timeScale;
+  handleInput();
 
-  updateRotation();
+  if (!pause)
+  {
+    elapsedTime += timeScale;
+    updateRotation();
+  }
 
   if (window->Open())
-    window->Draw(font, background, models, SolarSystem, orbitRotationAngles, axisRotationAngles, days);
+    window->Draw(font, background, models, SolarSystem, orbitRotationAngles, axisRotationAngles, days, timeScale);
   else
     running = false;
 }
@@ -144,13 +151,16 @@ void Simulation::updateRotation()
     const double orbitSeconds = iter.getOrbit() * secondsInDay;
     const double orbitAngularVelocity = (2 * PI) / orbitSeconds;
     const double orbitDisplacement = orbitAngularVelocity * (180 / PI);
-    orbitRotationAngles[i] += orbitDisplacement * timeScale;
+    orbitRotationAngles[i] += orbitDisplacement * static_cast<double>(timeScale);
 
     // Calculate axis angle displacement per second
-    const double axisSeconds = iter.getAxisRotation() * secondsInHour;
-    const double axisAngularVelocity = (2 * PI) / axisSeconds;
-    const double axisDisplacement = axisAngularVelocity * (180 / PI);
-    axisRotationAngles[i] += axisDisplacement * timeScale;
+    if (rotation)
+    {
+      const double axisSeconds = iter.getAxisRotation() * secondsInHour;
+      const double axisAngularVelocity = (2 * PI) / axisSeconds;
+      const double axisDisplacement = axisAngularVelocity * (180 / PI);
+      axisRotationAngles[i] += axisDisplacement * static_cast<double>(timeScale);
+    }
 
     ++i;
   }
