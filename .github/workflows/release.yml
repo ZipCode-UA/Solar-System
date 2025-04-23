@@ -1,6 +1,12 @@
-name: Build Commit
+name: Build and Release
 
-on: push
+permissions:
+  contents: write
+
+on: 
+  push:
+    tags:
+      - '*'
 
 jobs:
   build:
@@ -25,3 +31,9 @@ jobs:
 
       - name: Build
         run: cmake --build build --config Debug
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        if: github.ref_type == 'tag'
+        with:
+          files: build/Debug/Solar-System.exe, build/Debug/Solar-System.pdb
