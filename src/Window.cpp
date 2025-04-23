@@ -19,7 +19,6 @@
 
 #include "Window.h"
 
-#include <string>
 #include <vector>
 
 #include "raylib.h"
@@ -27,12 +26,15 @@
 #include "raymath.h"
 
 #include "CelestialBody.h"
+#include "UI.h"
 
 Window::Window()
 {
   // Setup Window
   SetConfigFlags(FLAG_VSYNC_HINT | FLAG_WINDOW_HIGHDPI);
-  InitWindow(1920, 1080, "Solar System");
+  InitWindow(GetScreenWidth(), GetScreenHeight(), "Solar System");
+  ToggleBorderlessWindowed();
+  HideCursor();
 
   // Setup Internals
   InitCamera();
@@ -106,18 +108,10 @@ void Window::Draw(Font& font,
 
   UpdateCamera(&camera, CAMERA_ORBITAL);
 
-  std::string frames = "Days: ";
-  frames += std::to_string(days);
-
-  std::string speed = "Time: ";
-  speed += std::to_string(timeScale);
-  speed += "x";
-
   BeginDrawing();
     ClearBackground(BLACK);
     DrawBackground(background);
-    DrawTextEx(font, frames.c_str(), { 10, 10 }, 38, 2, WHITE);
-    DrawTextEx(font, speed.c_str(), { 10, 50 }, 38, 2, WHITE);
+    DrawUI(font, SolarSystem, days, timeScale);
     BeginMode3D(camera);
       rlSetMatrixProjection(proj); // Override the projection matrix with a custom far plane
       DrawCelestialBodies(models, SolarSystem, orbitRotationAngles, axisRotationAngles);
