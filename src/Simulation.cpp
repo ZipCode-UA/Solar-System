@@ -38,7 +38,6 @@ Simulation::Simulation()
 
   // Seed random number generator
   SetRandomSeed(time(nullptr));
-
   // Toggle running state
   running = true;
 }
