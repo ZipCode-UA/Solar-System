@@ -53,21 +53,21 @@ public:
 
 public:
   // Accessors
-  std::string getName() const { return this->name; }
-  std::string getFileName() const { return this->fileName; }
-  double getMass() const { return this->mass; }
-  double getVolume() const { return this->volume; }
-  double getDensity() const { return this->density; }
-  double getGravity() const { return this->gravity; }
-  double getRadius() const { return logScale(this->radius, "radius"); }
-  double getVelocity() const { return this->velocity; }
-  double getPerihelion() const { return this->perihelion; }
-  double getAphelion() const { return this->aphelion; }
-  double getOrbit() const { return this->orbit; }
-  double getOrbitRadius() const { return logScale(this->orbitRadius, "orbitRadius"); }
-  double getAxisRotation() const { return this->rotation; }
-  int getSatellites() const { return this->satellites; }
-  bool getRing() const { return this->ring; }
+  std::string getName() const { return name; }
+  std::string getFileName() const { return fileName; }
+  double getMass() const { return mass; }
+  double getVolume() const { return volume; }
+  double getDensity() const { return density; }
+  double getGravity() const { return gravity; }
+  double getRadius() const { return logScale(radius, "radius"); }
+  double getVelocity() const { return velocity; }
+  double getPerihelion() const { return perihelion; }
+  double getAphelion() const { return aphelion; }
+  double getOrbit() const { return orbit; }
+  double getOrbitRadius() const { return logScale(orbitRadius, "orbitRadius"); }
+  double getAxisRotation() const { return rotation; }
+  int getSatellites() const { return satellites; }
+  bool getRing() const { return ring; }
 
 private: 
   std::string name;
