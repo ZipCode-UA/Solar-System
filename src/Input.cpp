@@ -43,7 +43,7 @@ void handleInput()
   {
     Simulation::rotation = !Simulation::rotation;
   }
-  else if (IsKeyPressed(KEY_P))
+  else if (IsKeyPressed(KEY_P) || IsKeyPressed(KEY_SPACE))
   {
     Simulation::pause = !Simulation::pause;
   }
