@@ -62,17 +62,17 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   UI.push_back(body);
 
   std::string mass = "Mass: ";
-  mass += std::to_string(static_cast<long long>(SolarSystem[index].getMass()));
+  mass += std::to_string(static_cast<double>(SolarSystem[index].getMass()));
   mass += "kg";
   UI.push_back(mass);
 
   std::string radius = "Radius ";
-  radius += std::to_string(static_cast<long long>(SolarSystem[index].getRadius()));
+  radius += std::to_string(static_cast<double>(SolarSystem[index].getRadius()));
   radius += "km";
   UI.push_back(radius);
 
   std::string volume = "Volume: ";
-  volume += std::to_string(static_cast<long long>(SolarSystem[index].getVolume()));
+  volume += std::to_string(static_cast<double>(SolarSystem[index].getVolume()));
   volume += "km^3";
   UI.push_back(volume);
 
