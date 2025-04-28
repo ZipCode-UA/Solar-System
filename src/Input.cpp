@@ -6,21 +6,21 @@
 
 void handleInput()
 {
-  if (IsKeyPressed(KEY_EQUAL) && IsKeyDown(KEY_LEFT_SHIFT))
+  if (IsKeyDown(KEY_EQUAL) && IsKeyDown(KEY_LEFT_SHIFT))
   {
     if (Simulation::timeScale == 1000 || Simulation::timeScale == 1)
       Simulation::timeScale = 10000;
     else
       Simulation::timeScale += Simulation::bigTimeScaleModifier;
   }
-  else if (IsKeyPressed(KEY_EQUAL))
+  else if (IsKeyDown(KEY_EQUAL))
   {
     if (Simulation::timeScale == 1)
       Simulation::timeScale = 1000;
     else
       Simulation::timeScale += Simulation::timeScaleModifier;
   }
-  else if (IsKeyPressed(KEY_MINUS) && IsKeyDown(KEY_LEFT_SHIFT))
+  else if (IsKeyDown(KEY_MINUS) && IsKeyDown(KEY_LEFT_SHIFT))
   {
     if (Simulation::timeScale == 10000)
       Simulation::timeScale = 1000;
@@ -32,7 +32,7 @@ void handleInput()
         Simulation::timeScale = 1;
     }
   }
-  else if (IsKeyPressed(KEY_MINUS))
+  else if (IsKeyDown(KEY_MINUS))
   {
     if (Simulation::timeScale - Simulation::timeScaleModifier > 0)
       Simulation::timeScale -= Simulation::timeScaleModifier;
