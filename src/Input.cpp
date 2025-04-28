@@ -8,22 +8,22 @@ void handleInput()
 {
   if (IsKeyDown(KEY_EQUAL) && IsKeyDown(KEY_LEFT_SHIFT))
   {
-    if (Simulation::timeScale == 1000 || Simulation::timeScale == 1)
-      Simulation::timeScale = 10000;
+    if (Simulation::timeScale == Simulation::timeScaleModifier || Simulation::timeScale == 1)
+      Simulation::timeScale = Simulation::bigTimeScaleModifier;
     else
       Simulation::timeScale += Simulation::bigTimeScaleModifier;
   }
   else if (IsKeyDown(KEY_EQUAL))
   {
     if (Simulation::timeScale == 1)
-      Simulation::timeScale = 1000;
+      Simulation::timeScale = Simulation::timeScaleModifier;
     else
       Simulation::timeScale += Simulation::timeScaleModifier;
   }
   else if (IsKeyDown(KEY_MINUS) && IsKeyDown(KEY_LEFT_SHIFT))
   {
-    if (Simulation::timeScale == 10000)
-      Simulation::timeScale = 1000;
+    if (Simulation::timeScale == Simulation::bigTimeScaleModifier)
+      Simulation::timeScale = 1;
     else
     {
       if (Simulation::timeScale - Simulation::bigTimeScaleModifier > 0)
