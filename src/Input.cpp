@@ -22,15 +22,10 @@ void handleInput()
   }
   else if (IsKeyDown(KEY_MINUS) && IsKeyDown(KEY_LEFT_SHIFT))
   {
-    if (Simulation::timeScale == Simulation::bigTimeScaleModifier)
+    if (Simulation::timeScale <= Simulation::bigTimeScaleModifier)
       Simulation::timeScale = 1;
-    else
-    {
-      if (Simulation::timeScale - Simulation::bigTimeScaleModifier > 0)
-        Simulation::timeScale -= Simulation::bigTimeScaleModifier;
-      else
-        Simulation::timeScale = 1;
-    }
+    else if (Simulation::timeScale - Simulation::bigTimeScaleModifier > 0)
+      Simulation::timeScale -= Simulation::bigTimeScaleModifier;
   }
   else if (IsKeyDown(KEY_MINUS))
   {
