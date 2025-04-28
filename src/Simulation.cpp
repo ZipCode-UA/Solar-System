@@ -67,7 +67,7 @@ void Simulation::update()
   }
 
   if (window->Open())
-    window->Draw(font, background, models, SolarSystem, orbitRotationAngles, axisRotationAngles, days, timeScale);
+    window->Draw(font, background, models, SolarSystem, orbitRotationAngles, axisRotationAngles, days, timeScale, displayInput);
   else
     running = false;
 }

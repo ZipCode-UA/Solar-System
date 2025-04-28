@@ -7,7 +7,7 @@
 
 #include "CelestialBody.h"
 
-void DrawUI(Font& font, std::vector<CelestialBody>& SolarSystem, int days, int timeScale)
+void DrawUI(Font& font, std::vector<CelestialBody>& SolarSystem, int days, int timeScale, bool displayInput)
 {
   // Time information
   drawTime(font, days, timeScale);
@@ -17,6 +17,10 @@ void DrawUI(Font& font, std::vector<CelestialBody>& SolarSystem, int days, int t
   if (days != 0 && days % 100 == 0) // Print a new fact every 100 days
     index = GetRandomValue(0, SolarSystem.size() - 1);
   drawFacts(font, SolarSystem, index);
+
+  // Draw input controls
+  if (displayInput)
+    drawInput(font);
 }
 
 void drawTime(Font& font, int days, int timeScale)
@@ -57,8 +61,8 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
 {
   std::vector<std::string> UI;
 
-  std::string body = SolarSystem[index].getName();
-  body += " Facts:";
+  std::string header = SolarSystem[index].getName();
+  header += " Facts:";
 
   std::string mass = "Mass: ";
   mass += std::to_string(static_cast<double>(SolarSystem[index].getMass()));
@@ -104,7 +108,55 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   Vector2 UIcurrent = UIstart;
 
   // Draw heading
-  DrawTextEx(font, body.c_str(), UIstart, 60, UIspacingSize, WHITE);
+  DrawTextEx(font, header.c_str(), UIstart, 60, UIspacingSize, WHITE);
+  UIcurrent.y += UIgap * 2;
+
+  // Draw UI members
+  for (const auto iter : UI)
+  {
+    DrawTextEx(font, iter.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
+    UIcurrent.y += UIgap;
+  }
+}
+
+void drawInput(Font& font)
+{
+  std::vector<std::string> UI;
+
+  std::string header = "Controls";
+
+  std::string rotation = "\"R\": Toggle rotation";
+  UI.push_back(rotation);
+
+  std::string pause = "\"P\": Pause simulation";
+  UI.push_back(pause);
+
+  std::string input = "\"C\": Toggle control display";
+  UI.push_back(input);
+
+  std::string timeScaleUpSmall = "\"+\": Increase time scale";
+  UI.push_back(timeScaleUpSmall);
+
+  std::string timeScaleDownSmall = "\"-\": Decrease time scale";
+  UI.push_back(timeScaleDownSmall);
+
+  std::string timeScaleUpBig = "\"Shift +\": Increase time scale faster";
+  UI.push_back(timeScaleUpBig);
+
+  std::string timeScaleDownBig = "\"Shift -\": Decrease time scale faster";
+  UI.push_back(timeScaleDownBig);
+
+  // UI modifiers
+  int UIfontSize = 20;
+  int UIspacingSize = 2;
+  float UIgap = 24;
+
+  // UI location vectors
+  Vector2 UIstart = { static_cast<float>(GetScreenWidth() - 400), 40 };
+  Vector2 UIcurrent = UIstart;
+
+  // Draw heading
+  DrawTextEx(font, header.c_str(), UIstart, 20, UIspacingSize, WHITE);
   UIcurrent.y += UIgap * 2;
 
   // Draw UI members

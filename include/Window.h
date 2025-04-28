@@ -31,7 +31,8 @@ public:
             std::vector<double>& orbitRotationAngles,
             std::vector<double>& axisRotationAngles,
             int days,
-            int timeScale);
+            int timeScale,
+            bool drawInput);
 
 private:
   Camera camera = { 0 };

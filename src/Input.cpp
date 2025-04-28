@@ -42,4 +42,8 @@ void handleInput()
   {
     Simulation::pause = !Simulation::pause;
   }
+  else if (IsKeyPressed(KEY_C))
+  {
+    Simulation::displayInput = !Simulation::displayInput;
+  }
 }

@@ -37,6 +37,7 @@ public:
   static inline int timeScale = timeScaleDefault;
   static inline bool rotation = false;
   static inline bool pause = false;
+  static inline bool displayInput = true;
 
 private:
   double elapsedTime = 0;
