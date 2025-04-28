@@ -59,7 +59,6 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
 
   std::string body = SolarSystem[index].getName();
   body += " Facts:";
-  UI.push_back(body);
 
   std::string mass = "Mass: ";
   mass += std::to_string(static_cast<double>(SolarSystem[index].getMass()));
@@ -101,7 +100,7 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   float UIgap = 40;
 
   // UI location vectors
-  Vector2 UIstart = { 10, static_cast<float>(GetScreenHeight() - 400) };
+  Vector2 UIstart = { 10, static_cast<float>(GetScreenHeight() - ((UI.size() + 2)) * UIgap) };
   Vector2 UIcurrent = UIstart;
 
   // Draw heading
