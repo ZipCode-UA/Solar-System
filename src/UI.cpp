@@ -97,7 +97,7 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   UI.push_back(day);
 
   std::string satellites = "Number of Moons: ";
-  satellites += std::to_string(static_cast<int>(SolarSystem[index].getSatellites()));
+  satellites += std::to_string(SolarSystem[index].getSatellites());
   UI.push_back(satellites);
 
   // UI modifiers
