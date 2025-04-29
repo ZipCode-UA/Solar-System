@@ -60,11 +60,13 @@ public:
   double getDensity() const { return density; }
   double getGravity() const { return gravity; }
   double getRadius() const { return logScale(radius, "radius"); }
+  double getUnscaledRadius() const { return radius; }
   double getVelocity() const { return velocity; }
   double getPerihelion() const { return perihelion; }
   double getAphelion() const { return aphelion; }
   double getOrbitRotation() const { return orbitRotation; }
   double getOrbitRadius() const { return logScale(orbitRadius, "orbitRadius"); }
+  double getUnscaledOrbitRadius() const { return orbitRadius; }
   double getOrbitPosition() const { return orbitPosition; }
   double getAxisRotation() const { return axisRotation; }
   double getAxisPosition() const { return axisPosition; }

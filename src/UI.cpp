@@ -67,32 +67,32 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   header += " Facts:";
 
   std::string mass = "Mass: ";
-  mass += scientificString(std::to_string(static_cast<double>(SolarSystem[index].getMass())));
+  mass += scientificString(std::to_string(SolarSystem[index].getMass()));
   mass += "kg";
   UI.push_back(mass);
 
   std::string radius = "Radius ";
-  radius += scientificString(std::to_string(static_cast<double>(SolarSystem[index].getRadius())));
+  radius += scientificString(std::to_string(SolarSystem[index].getUnscaledRadius()));
   radius += "km";
   UI.push_back(radius);
 
   std::string volume = "Volume: ";
-  volume += scientificString(std::to_string(static_cast<double>(SolarSystem[index].getVolume())));
+  volume += scientificString(std::to_string(SolarSystem[index].getVolume()));
   volume += "km^3";
   UI.push_back(volume);
 
   std::string gravity = "Gravity: ";
-  gravity += fixedString(std::to_string(static_cast<double>(SolarSystem[index].getGravity())));
+  gravity += fixedString(std::to_string(SolarSystem[index].getGravity()));
   gravity += "m/s^2";
   UI.push_back(gravity);
 
   std::string orbit = "Orbit Length: ";
-  orbit += fixedString(std::to_string(static_cast<double>(SolarSystem[index].getOrbitRotation())));
+  orbit += fixedString(std::to_string(SolarSystem[index].getOrbitRotation()));
   orbit += " days";
   UI.push_back(orbit);
 
   std::string day = "Day Length: ";
-  day += fixedString(std::to_string(static_cast<int>(SolarSystem[index].getAxisRotation())));
+  day += fixedString(std::to_string(SolarSystem[index].getAxisRotation()));
   day += " hours";
   UI.push_back(day);
 
