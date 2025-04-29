@@ -76,6 +76,7 @@ void Simulation::update()
     for (int i = 0; i != SolarSystem.size(); ++i)
     {
       SolarSystem[i].updateOrbitPosition(PI, timeScale);
+      // TODO: Move rotation check to draw function
       if (rotation)
         SolarSystem[i].updateAxisPosition(PI, timeScale);
     }
