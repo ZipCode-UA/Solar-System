@@ -30,6 +30,10 @@ public:
             int timeScale,
             bool displayInput);
 
+public:
+  // Accessors
+  Camera& getCamera() { return camera; }
+
 private:
   Camera camera = { 0 };
   Matrix proj;

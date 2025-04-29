@@ -47,3 +47,14 @@ void handleInput()
     Simulation::displayInput = !Simulation::displayInput;
   }
 }
+
+void handleMouseClick(Camera& camera, const std::vector<Model>& models, const std::vector<CelestialBody>& SolarSystem)
+{
+  Ray ray = GetMouseRay(GetMousePosition(), camera);
+  static bool modelClicked = false;
+
+  for (int i = 0; i != SolarSystem.size(); ++i)
+  {
+    GetRayCollisionSphere(ray, { 0, 0, 0 }, SolarSystem[i].getRadius());
+  }
+}

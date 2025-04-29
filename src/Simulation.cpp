@@ -62,10 +62,13 @@ Simulation::~Simulation()
 void Simulation::update()
 {
   handleInput();
+  
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    handleMouseClick(window->getCamera(), models, SolarSystem);
 
   if (!pause)
   {
-    elapsedTime += timeScale * GetFrameTime();
+    elapsedTime += timeScale;
 
     const double secondsInDay = 86400;
     days = elapsedTime / secondsInDay;
