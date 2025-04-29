@@ -72,7 +72,7 @@ namespace Celestial
   }
 }
 
-CelestialBody::CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring)
+CelestialBody::CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbitRotation, double axisRotation, int satellites, bool ring)
   : name(name),
     fileName(fileName),
     mass(mass),
@@ -83,9 +83,9 @@ CelestialBody::CelestialBody(const std::string& name, const std::string& fileNam
     velocity(velocity),
     perihelion(perihelion),
     aphelion(aphelion),
-    orbit(orbit),
+    orbitRotation(orbitRotation),
     orbitRadius((perihelion + aphelion) / 2),
-    rotation(rotation),
+    axisRotation(axisRotation),
     satellites(satellites),
     ring(ring) { }
 
@@ -163,8 +163,8 @@ double CelestialBody::getDistance(const CelestialBody& compare, double uptime) c
   // TODO: Use current program time to calculate the true anomaly - time is currently hardcoded
   double secondsInDay = 86400;
   double time = uptime / secondsInDay; // time in days
-  double thetaA = 2 * PI * time / orbit;
-  double thetaB = 2 * PI * time / compare.getOrbit();
+  double thetaA = 2 * PI * time / orbitRotation;
+  double thetaB = 2 * PI * time / compare.getOrbitRotation();
 
   // Radial distance calculation -- using orbit equation
   double radialA = (meanDistanceA * (1 - pow(eccentricityA, 2))) / (1 + eccentricityA * cos(thetaA));
@@ -186,4 +186,32 @@ double CelestialBody::getAttractionForce(const CelestialBody& compare, double up
   const double distance = getDistance(compare);
   
   return gravitationalForce * ((mass * compare.getMass()) / (pow(distance, 2)));
+}
+
+void CelestialBody::updateOrbitPosition(double pi, double timeScale)
+{
+  // Skip the sun
+  if (name == "Sun")
+    return;
+
+  // Calculate orbit angle displacement per second
+  const double secondsInDay = 86400;
+  const double orbitSeconds = orbitRotation * secondsInDay;
+  const double orbitAngularVelocity = (2 * pi) / orbitSeconds;
+  const double orbitDisplacement = orbitAngularVelocity * (180 / pi);
+  orbitPosition += orbitDisplacement * static_cast<double>(timeScale);
+}
+
+void CelestialBody::updateAxisPosition(double pi, double timeScale)
+{
+  // Skip the sun
+  if (name == "Sun")
+    return;
+
+  // Calculate axis angle displacement per second
+  const double secondsInHour = 3600;
+  const double axisSeconds = axisRotation * secondsInHour;
+  const double axisAngularVelocity = (2 * pi) / axisSeconds;
+  const double axisDisplacement = axisAngularVelocity * (180 / pi);
+  axisPosition += axisDisplacement * static_cast<double>(timeScale);
 }

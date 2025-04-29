@@ -66,9 +66,7 @@ void Window::DrawBackground(Texture2D& background)
 }
 
 void Window::DrawCelestialBodies(std::vector<Model>& models,
-                                 std::vector<CelestialBody>& SolarSystem,
-                                 std::vector<double>& orbitRotationAngles,
-                                 std::vector<double>& axisRotationAngles)
+                                 std::vector<CelestialBody>& SolarSystem)
 {
   int i = 0;
   for (const auto iter : SolarSystem)
@@ -77,10 +75,10 @@ void Window::DrawCelestialBodies(std::vector<Model>& models,
     const float scaledRadius = static_cast<float>(iter.getRadius());
 
     rlPushMatrix();
-      rlRotatef(orbitRotationAngles[i], 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit around the Sun
+      rlRotatef(static_cast<float>(iter.getOrbitPosition()), 0.0f, 1.0f, 0.0f); // Rotation of CelestialBody orbit around the Sun
       rlTranslatef(scaledOrbitRadius, 0.0f, 0.0f); // Translation of CelestialBody orbit
       rlPushMatrix();
-        rlRotatef(axisRotationAngles[i], 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody itself
+        rlRotatef(static_cast<float>(iter.getAxisPosition()), 0.25f, 1.0f, 0.0f); // Rotation of CelestialBody itself
         rlScalef(scaledRadius, scaledRadius, scaledRadius); // Scale CelestialBody
         DrawModel(models[i], { 0.0f, 0.0f, 0.0f }, 1.0f, WHITE); // Draw the CelestialBody
       rlPopMatrix();
@@ -98,11 +96,9 @@ void Window::Draw(Font& font,
                   Texture2D& background,
                   std::vector<Model>& models,
                   std::vector<CelestialBody>& SolarSystem,
-                  std::vector<double>& orbitRotationAngles,
-                  std::vector<double>& axisRotationAngles,
                   int days,
                   int timeScale,
-                  bool drawInput)
+                  bool displayInput)
 {
   const float focalSize = (static_cast<float>(SolarSystem.crbegin()->getOrbitRadius() * focalScale));
   camera.position = Vector3{ focalSize, focalSize, focalSize }; // Camera position
@@ -112,10 +108,10 @@ void Window::Draw(Font& font,
   BeginDrawing();
     ClearBackground(BLACK);
     DrawBackground(background);
-    DrawUI(font, SolarSystem, days, timeScale, drawInput);
+    DrawUI(font, SolarSystem, days, timeScale, displayInput);
     BeginMode3D(camera);
       rlSetMatrixProjection(proj); // Override the projection matrix with a custom far plane
-      DrawCelestialBodies(models, SolarSystem, orbitRotationAngles, axisRotationAngles);
+      DrawCelestialBodies(models, SolarSystem);
     EndMode3D();
   EndDrawing();
 }

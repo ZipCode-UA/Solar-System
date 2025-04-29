@@ -18,9 +18,7 @@ private:
   void InitCamera();
   void DrawBackground(Texture2D& background);
   void DrawCelestialBodies(std::vector<Model>& models,
-                           std::vector<CelestialBody>& SolarSystem,
-                           std::vector<double>& orbitRotationAngles,
-                           std::vector<double>& axisRotationAngles);
+                           std::vector<CelestialBody>& SolarSystem);
 
 public:
   bool Open();
@@ -28,11 +26,9 @@ public:
             Texture2D& background,
             std::vector<Model>& models,
             std::vector<CelestialBody>& SolarSystem,
-            std::vector<double>& orbitRotationAngles,
-            std::vector<double>& axisRotationAngles,
             int days,
             int timeScale,
-            bool drawInput);
+            bool displayInput);
 
 private:
   Camera camera = { 0 };

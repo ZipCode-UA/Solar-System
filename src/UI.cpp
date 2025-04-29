@@ -85,7 +85,7 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   UI.push_back(gravity);
 
   std::string orbit = "Orbit Length: ";
-  orbit += std::to_string(static_cast<int>(SolarSystem[index].getOrbit()));
+  orbit += std::to_string(static_cast<int>(SolarSystem[index].getOrbitRotation()));
   orbit += " days";
   UI.push_back(orbit);
 

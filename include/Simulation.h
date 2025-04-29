@@ -26,9 +26,6 @@ private:
   void LoadModels();
 
 private:
-  void updateRotation();
-
-private:
   static const inline int timeScaleDefault = 20000;
 
 public:
@@ -52,8 +49,6 @@ private:
 
 private:
   std::vector<CelestialBody> SolarSystem;
-  std::vector<double> orbitRotationAngles;
-  std::vector<double> axisRotationAngles;
 
 private:
   const std::string resourceDirectory = "resources";
