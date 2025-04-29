@@ -1,6 +1,8 @@
 #include "UI.h"
 
+#include <iomanip>
 #include <string>
+#include <sstream>
 #include <vector>
 
 #include <raylib.h>
@@ -65,32 +67,32 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   header += " Facts:";
 
   std::string mass = "Mass: ";
-  mass += std::to_string(static_cast<double>(SolarSystem[index].getMass()));
+  mass += scientificString(std::to_string(static_cast<double>(SolarSystem[index].getMass())));
   mass += "kg";
   UI.push_back(mass);
 
   std::string radius = "Radius ";
-  radius += std::to_string(static_cast<double>(SolarSystem[index].getRadius()));
+  radius += scientificString(std::to_string(static_cast<double>(SolarSystem[index].getRadius())));
   radius += "km";
   UI.push_back(radius);
 
   std::string volume = "Volume: ";
-  volume += std::to_string(static_cast<double>(SolarSystem[index].getVolume()));
+  volume += scientificString(std::to_string(static_cast<double>(SolarSystem[index].getVolume())));
   volume += "km^3";
   UI.push_back(volume);
 
   std::string gravity = "Gravity: ";
-  gravity += std::to_string(static_cast<int>(SolarSystem[index].getGravity()));
+  gravity += fixedString(std::to_string(static_cast<double>(SolarSystem[index].getGravity())));
   gravity += "m/s^2";
   UI.push_back(gravity);
 
   std::string orbit = "Orbit Length: ";
-  orbit += std::to_string(static_cast<int>(SolarSystem[index].getOrbitRotation()));
+  orbit += fixedString(std::to_string(static_cast<double>(SolarSystem[index].getOrbitRotation())));
   orbit += " days";
   UI.push_back(orbit);
 
   std::string day = "Day Length: ";
-  day += std::to_string(static_cast<int>(SolarSystem[index].getAxisRotation()));
+  day += fixedString(std::to_string(static_cast<int>(SolarSystem[index].getAxisRotation())));
   day += " hours";
   UI.push_back(day);
 
@@ -165,4 +167,20 @@ void drawInput(Font& font)
     DrawTextEx(font, iter.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
     UIcurrent.y += UIgap;
   }
+}
+
+std::string fixedString(const std::string& input)
+{
+  std::stringstream stream;
+  double value = std::stod(input);
+  stream << std::fixed << std::setprecision(2) << value;
+  return stream.str();
+}
+
+std::string scientificString(const std::string& input)
+{
+  std::stringstream stream;
+  double value = std::stod(input);
+  stream << std::scientific << std::setprecision(2) << value;
+  return stream.str();
 }
