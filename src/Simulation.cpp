@@ -29,16 +29,19 @@ Simulation::Simulation()
   LoadTextures(textureDirectory);
   LoadModels();
 
-  // Initialize rotation angles
-  for (const auto iter : SolarSystem)
-  {
-    orbitRotationAngles.push_back(0);
-    axisRotationAngles.push_back(0);
-  }
-
   // Seed random number generator
   SetRandomSeed(time(nullptr));
-  
+
+  // Initialize random rotation angles
+  for (int i = 0; i != SolarSystem.size(); ++i)
+  {
+    if (SolarSystem[i].getName() != "Sun")
+    {
+      SolarSystem[i].setOrbitPosition(GetRandomValue(0, 360));
+      SolarSystem[i].setAxisPosition(GetRandomValue(0, 360));
+    }
+  }
+
   // Toggle running state
   running = true;
 }
@@ -59,15 +62,28 @@ Simulation::~Simulation()
 void Simulation::update()
 {
   handleInput();
+  
+  if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON))
+    handleMouseClick(window->getCamera(), models, SolarSystem);
 
   if (!pause)
   {
     elapsedTime += timeScale;
-    updateRotation();
+
+    const double secondsInDay = 86400;
+    days = elapsedTime / secondsInDay;
+
+    for (int i = 0; i != SolarSystem.size(); ++i)
+    {
+      SolarSystem[i].updateOrbitPosition(PI, timeScale);
+      // TODO: Move rotation check to draw function
+      if (rotation)
+        SolarSystem[i].updateAxisPosition(PI, timeScale);
+    }
   }
 
   if (window->Open())
-    window->Draw(font, background, models, SolarSystem, orbitRotationAngles, axisRotationAngles, days, timeScale);
+    window->Draw(font, background, models, SolarSystem, days, timeScale, displayInput);
   else
     running = false;
 }
@@ -129,40 +145,5 @@ void Simulation::LoadModels()
     Model model = LoadModelFromMesh(mesh);
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = textures[i++];
     models.push_back(model);
-  }
-}
-
-void Simulation::updateRotation()
-{
-  // Update rotation vectors
-  const double secondsInDay = 86400;
-  const double secondsInHour = 3600;
-  days = elapsedTime / secondsInDay;
-  int i = 0;
-  for (const auto iter : SolarSystem)
-  {
-    // Skip the sun
-    if (iter.getOrbit() == 0 || iter.getOrbitRadius() == 0)
-    {
-      ++i;
-      continue;
-    }
-
-    // Calculate orbit angle displacement per second
-    const double orbitSeconds = iter.getOrbit() * secondsInDay;
-    const double orbitAngularVelocity = (2 * PI) / orbitSeconds;
-    const double orbitDisplacement = orbitAngularVelocity * (180 / PI);
-    orbitRotationAngles[i] += orbitDisplacement * static_cast<double>(timeScale);
-
-    // Calculate axis angle displacement per second
-    if (rotation)
-    {
-      const double axisSeconds = iter.getAxisRotation() * secondsInHour;
-      const double axisAngularVelocity = (2 * PI) / axisSeconds;
-      const double axisDisplacement = axisAngularVelocity * (180 / PI);
-      axisRotationAngles[i] += axisDisplacement * static_cast<double>(timeScale);
-    }
-
-    ++i;
   }
 }

@@ -1,13 +1,15 @@
 #include "UI.h"
 
+#include <iomanip>
 #include <string>
+#include <sstream>
 #include <vector>
 
 #include <raylib.h>
 
 #include "CelestialBody.h"
 
-void DrawUI(Font& font, std::vector<CelestialBody>& SolarSystem, int days, int timeScale)
+void DrawUI(Font& font, std::vector<CelestialBody>& SolarSystem, int days, int timeScale, bool displayInput)
 {
   // Time information
   drawTime(font, days, timeScale);
@@ -17,6 +19,10 @@ void DrawUI(Font& font, std::vector<CelestialBody>& SolarSystem, int days, int t
   if (days != 0 && days % 100 == 0) // Print a new fact every 100 days
     index = GetRandomValue(0, SolarSystem.size() - 1);
   drawFacts(font, SolarSystem, index);
+
+  // Draw input controls
+  if (displayInput)
+    drawInput(font);
 }
 
 void drawTime(Font& font, int days, int timeScale)
@@ -57,42 +63,41 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
 {
   std::vector<std::string> UI;
 
-  std::string body = SolarSystem[index].getName();
-  body += " Facts:";
-  UI.push_back(body);
+  std::string header = SolarSystem[index].getName();
+  header += " Facts:";
 
   std::string mass = "Mass: ";
-  mass += std::to_string(static_cast<long long>(SolarSystem[index].getMass()));
+  mass += scientificString(std::to_string(SolarSystem[index].getMass()));
   mass += "kg";
   UI.push_back(mass);
 
   std::string radius = "Radius ";
-  radius += std::to_string(static_cast<long long>(SolarSystem[index].getRadius()));
+  radius += scientificString(std::to_string(SolarSystem[index].getUnscaledRadius()));
   radius += "km";
   UI.push_back(radius);
 
   std::string volume = "Volume: ";
-  volume += std::to_string(static_cast<long long>(SolarSystem[index].getVolume()));
+  volume += scientificString(std::to_string(SolarSystem[index].getVolume()));
   volume += "km^3";
   UI.push_back(volume);
 
   std::string gravity = "Gravity: ";
-  gravity += std::to_string(static_cast<int>(SolarSystem[index].getGravity()));
+  gravity += fixedString(std::to_string(SolarSystem[index].getGravity()));
   gravity += "m/s^2";
   UI.push_back(gravity);
 
   std::string orbit = "Orbit Length: ";
-  orbit += std::to_string(static_cast<int>(SolarSystem[index].getOrbit()));
+  orbit += fixedString(std::to_string(SolarSystem[index].getOrbitRotation()));
   orbit += " days";
   UI.push_back(orbit);
 
   std::string day = "Day Length: ";
-  day += std::to_string(static_cast<int>(SolarSystem[index].getAxisRotation()));
+  day += fixedString(std::to_string(SolarSystem[index].getAxisRotation()));
   day += " hours";
   UI.push_back(day);
 
   std::string satellites = "Number of Moons: ";
-  satellites += std::to_string(static_cast<int>(SolarSystem[index].getSatellites()));
+  satellites += std::to_string(SolarSystem[index].getSatellites());
   UI.push_back(satellites);
 
   // UI modifiers
@@ -101,11 +106,11 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
   float UIgap = 40;
 
   // UI location vectors
-  Vector2 UIstart = { 10, static_cast<float>(GetScreenHeight() - 400) };
+  Vector2 UIstart = { 10, static_cast<float>(GetScreenHeight() - ((UI.size() + 2)) * UIgap) };
   Vector2 UIcurrent = UIstart;
 
   // Draw heading
-  DrawTextEx(font, body.c_str(), UIstart, 60, UIspacingSize, WHITE);
+  DrawTextEx(font, header.c_str(), UIstart, 60, UIspacingSize, WHITE);
   UIcurrent.y += UIgap * 2;
 
   // Draw UI members
@@ -114,4 +119,68 @@ void drawFacts(Font& font, std::vector<CelestialBody>& SolarSystem, int index)
     DrawTextEx(font, iter.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
     UIcurrent.y += UIgap;
   }
+}
+
+void drawInput(Font& font)
+{
+  std::vector<std::string> UI;
+
+  std::string header = "Controls";
+
+  std::string rotation = "\"R\": Toggle rotation";
+  UI.push_back(rotation);
+
+  std::string pause = "\"P\": Pause simulation";
+  UI.push_back(pause);
+
+  std::string input = "\"C\": Toggle control display";
+  UI.push_back(input);
+
+  std::string timeScaleUpSmall = "\"+\": Increase time scale";
+  UI.push_back(timeScaleUpSmall);
+
+  std::string timeScaleDownSmall = "\"-\": Decrease time scale";
+  UI.push_back(timeScaleDownSmall);
+
+  std::string timeScaleUpBig = "\"Shift +\": Increase time scale faster";
+  UI.push_back(timeScaleUpBig);
+
+  std::string timeScaleDownBig = "\"Shift -\": Decrease time scale faster";
+  UI.push_back(timeScaleDownBig);
+
+  // UI modifiers
+  int UIfontSize = 20;
+  int UIspacingSize = 2;
+  float UIgap = 24;
+
+  // UI location vectors
+  Vector2 UIstart = { static_cast<float>(GetScreenWidth() - 400), 40 };
+  Vector2 UIcurrent = UIstart;
+
+  // Draw heading
+  DrawTextEx(font, header.c_str(), UIstart, 20, UIspacingSize, WHITE);
+  UIcurrent.y += UIgap * 2;
+
+  // Draw UI members
+  for (const auto iter : UI)
+  {
+    DrawTextEx(font, iter.c_str(), UIcurrent, UIfontSize, UIspacingSize, WHITE);
+    UIcurrent.y += UIgap;
+  }
+}
+
+std::string fixedString(const std::string& input)
+{
+  std::stringstream stream;
+  double value = std::stod(input);
+  stream << std::fixed << std::setprecision(2) << value;
+  return stream.str();
+}
+
+std::string scientificString(const std::string& input)
+{
+  std::stringstream stream;
+  double value = std::stod(input);
+  stream << std::scientific << std::setprecision(2) << value;
+  return stream.str();
 }

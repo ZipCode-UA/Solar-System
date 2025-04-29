@@ -38,7 +38,7 @@ private:
 
 public:
   CelestialBody() = default;
-  CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbit, double rotation, int satellites, bool ring);
+  CelestialBody(const std::string& name, const std::string& fileName, double mass, double volume, double density, double gravity, double radius, double velocity, double perihelion, double aphelion, double orbitRotation, double axisRotation, int satellites, bool ring);
   CelestialBody(const CelestialBody&) = default;
   CelestialBody& operator=(CelestialBody&&) = default;
   ~CelestialBody() = default;
@@ -53,38 +53,52 @@ public:
 
 public:
   // Accessors
-  std::string getName() const { return this->name; }
-  std::string getFileName() const { return this->fileName; }
-  double getMass() const { return this->mass; }
-  double getVolume() const { return this->volume; }
-  double getDensity() const { return this->density; }
-  double getGravity() const { return this->gravity; }
-  double getRadius() const { return logScale(this->radius, "radius"); }
-  double getVelocity() const { return this->velocity; }
-  double getPerihelion() const { return this->perihelion; }
-  double getAphelion() const { return this->aphelion; }
-  double getOrbit() const { return this->orbit; }
-  double getOrbitRadius() const { return logScale(this->orbitRadius, "orbitRadius"); }
-  double getAxisRotation() const { return this->rotation; }
-  int getSatellites() const { return this->satellites; }
-  bool getRing() const { return this->ring; }
+  std::string getName() const { return name; }
+  std::string getFileName() const { return fileName; }
+  double getMass() const { return mass; }
+  double getVolume() const { return volume; }
+  double getDensity() const { return density; }
+  double getGravity() const { return gravity; }
+  double getRadius() const { return logScale(radius, "radius"); }
+  double getUnscaledRadius() const { return radius; }
+  double getVelocity() const { return velocity; }
+  double getPerihelion() const { return perihelion; }
+  double getAphelion() const { return aphelion; }
+  double getOrbitRotation() const { return orbitRotation; }
+  double getOrbitRadius() const { return logScale(orbitRadius, "orbitRadius"); }
+  double getUnscaledOrbitRadius() const { return orbitRadius; }
+  double getOrbitPosition() const { return orbitPosition; }
+  double getAxisRotation() const { return axisRotation; }
+  double getAxisPosition() const { return axisPosition; }
+  int getSatellites() const { return satellites; }
+  bool getRing() const { return ring; }
+
+public:
+  // Mutators
+  void updateOrbitPosition(double pi, double timeScale);
+  void updateAxisPosition(double pi, double timeScale);
+  void setOrbitPosition(double orbitPosition) { this->orbitPosition = orbitPosition; }
+  void setAxisPosition(double axisPosition) { this->axisPosition = axisPosition; }
+  void setSatellites(int satellites) { this->satellites = satellites; }
 
 private: 
   std::string name;
   std::string fileName;
-  double mass;
-  double volume;
-  double density;
-  double gravity;
-  double radius;
-  double velocity;
-  double perihelion;
-  double aphelion;
-  double orbit;
-  double orbitRadius;
-  double rotation;
-  int satellites;
-  bool ring;
+  double mass = 0;
+  double volume = 0;
+  double density = 0;
+  double gravity = 0;
+  double radius = 0;
+  double velocity = 0;
+  double perihelion = 0;
+  double aphelion = 0;
+  double orbitRotation = 0;
+  double orbitRadius = 0;
+  double orbitPosition = 0;
+  double axisRotation = 0;
+  double axisPosition = 0;
+  int satellites = 0;
+  bool ring = false;
 };
 
 #endif // CELESTIALBODY_H

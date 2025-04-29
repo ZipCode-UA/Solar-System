@@ -33,7 +33,7 @@ std::vector<CelestialBody> getSolarSystem()
 {
   std::vector<CelestialBody> SolarSystem;
 
-  const CelestialBody Sun
+  CelestialBody Sun
   (
     "Sun",
     "Sun.jpg",
@@ -52,11 +52,11 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Sun);
 
-  const CelestialBody Mercury
+  CelestialBody Mercury
   (
     "Mercury",
     "Mercury.jpg",
-    0.3301      * pow(10, 24),
+    3.301       * pow(10, 23),
     6.083       * pow(10, 10),
     5.429       * pow(10, 3),
     3.70,
@@ -71,7 +71,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Mercury);
 
-  const CelestialBody Venus
+  CelestialBody Venus
   (
     "Venus",
     "Venus.jpg",
@@ -90,7 +90,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Venus);
 
-  const CelestialBody Earth
+  CelestialBody Earth
   (
     "Earth",
     "Earth.jpg",
@@ -109,7 +109,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Earth);
 
-  const CelestialBody Mars
+  CelestialBody Mars
   (
     "Mars",
     "Mars.jpg",
@@ -128,7 +128,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Mars);
 
-  const CelestialBody Jupiter
+  CelestialBody Jupiter
   (
     "Jupiter",
     "Jupiter.jpg",
@@ -147,7 +147,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Jupiter);
 
-  const CelestialBody Saturn
+  CelestialBody Saturn
   {
     "Saturn",
     "Saturn.jpg",
@@ -166,7 +166,7 @@ std::vector<CelestialBody> getSolarSystem()
   };
   SolarSystem.push_back(Saturn);
 
-  const CelestialBody Uranus
+  CelestialBody Uranus
   (
     "Uranus",
     "Uranus.jpg",
@@ -185,7 +185,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Uranus);
 
-  const CelestialBody Neptune
+  CelestialBody Neptune
   (
     "Neptune",
     "Neptune.jpg",
@@ -204,7 +204,7 @@ std::vector<CelestialBody> getSolarSystem()
   );
   SolarSystem.push_back(Neptune);
 
-  const CelestialBody Pluto
+  CelestialBody Pluto
   (
     "Pluto",
     "Pluto.jpg",
