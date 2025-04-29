@@ -56,7 +56,7 @@ std::vector<CelestialBody> getSolarSystem()
   (
     "Mercury",
     "Mercury.jpg",
-    0.3301      * pow(10, 24),
+    3.301       * pow(10, 23),
     6.083       * pow(10, 10),
     5.429       * pow(10, 3),
     3.70,
