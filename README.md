@@ -1,6 +1,6 @@
 # Solar-System
 
-Solar-Sytem is a GitHub collaboration demo
+Solar-Sytem is a physically based astrophysics simualtor and game engine utilizing raylib as an OpenGL wrapper.
 
 ## Contributing
 
